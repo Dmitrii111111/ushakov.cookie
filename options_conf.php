@@ -2,6 +2,7 @@
 
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\SiteTable;
+use Bitrix\Main\Config\Option;
 
 Loc::loadMessages(dirname(__FILE__) . '/options.php');
 
@@ -52,11 +53,19 @@ while ($item = $res->fetch()) {
         'placeholder' => Loc::getMessage('USHAKOV_COOKIE_TEXT_BUTTON_PLACEHOLDER'),
     ];
 
+    // цвет кодом
+    // $options[] = [
+    //     'type' => 'text',
+    //     'name' => 'link_color_' . $item['LID'],
+    //     'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_LINK_COLOR'),
+    //     'value' => '#34a0ff',
+    // ];
+
     $options[] = [
-        'type' => 'text',
+        'type' => 'custom',
         'name' => 'link_color_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_LINK_COLOR'),
-        'value' => '#34a0ff',
+        'html' => '<input type="color" name="link_color_' . $item["LID"] . '" value="' . htmlspecialcharsbx(Option::get("ushakov.cookie", "link_color_" . $item["LID"], "#34a0ff")) . '" style="width: 60px; height: 30px; padding: 0; border: none; cursor:pointer;">'
     ];
 
     $options[] = [

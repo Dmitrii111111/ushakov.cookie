@@ -103,6 +103,9 @@ $tabControl->Begin();
                                 </select>
                                 <?php
                                 break;
+                            case 'custom':
+                                echo $arOption['html'] ?? '';
+                                break;
                         }
                         ?>
                     </td>
