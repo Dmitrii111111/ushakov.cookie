@@ -65,7 +65,16 @@ while ($item = $res->fetch()) {
         'type' => 'custom',
         'name' => 'link_color_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_LINK_COLOR'),
+        // 'value' => '#34a0ff',
         'html' => '<input type="color" name="link_color_' . $item["LID"] . '" value="' . htmlspecialcharsbx(Option::get("ushakov.cookie", "link_color_" . $item["LID"], "#34a0ff")) . '" style="width: 60px; height: 30px; padding: 0; border: none; cursor:pointer;">'
+    ];
+    
+    $options[] = [
+        'type' => 'custom',
+        'name' => 'bg_color_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_BG_COLOR'),
+        // 'value' => '#000000',
+        'html' => '<input type="color" name="bg_color_' . $item["LID"] . '" value="' . htmlspecialcharsbx(Option::get("ushakov.cookie", "bg_color_" . $item["LID"], "#000000")) . '" style="width: 60px; height: 30px; padding: 0; border: none; cursor:pointer;">'
     ];
 
     $options[] = [

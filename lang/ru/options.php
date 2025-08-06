@@ -7,6 +7,7 @@ $MESS["USHAKOV_COOKIE_OPT_TEXT_LABEL"] = "Текст предупреждени�
 $MESS["USHAKOV_COOKIE_OPT_TEXT"] = "Пользуясь нашим сайтом, вы соглашаетесь с тем, что #мы используем cookies#";
 $MESS["USHAKOV_COOKIE_OPT_LINK"] = "<b>Ссылка на страницу</b> с условиями";
 $MESS["USHAKOV_COOKIE_OPT_LINK_COLOR"] = "Цвет ссылки";
+$MESS['USHAKOV_COOKIE_OPT_BG_COLOR'] = 'Цвет фона плашки';
 $MESS["USHAKOV_COOKIE_OPT_ZINDEX"] = "Положение по оси z-index";
 $MESS["USHAKOV_COOKIE_OPT_COMMON"] = "Общие настройки";
 $MESS["USHAKOV_COOKIE_OPT_DAYS"] = "На сколько дней сохранять согласие пользователя";

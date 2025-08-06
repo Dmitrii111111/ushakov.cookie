@@ -44,6 +44,9 @@
     }
 
     let innerDiv = document.createElement('div')
+    innerDiv.classList.add('ushakov-cookie-bg-custom');
+    innerDiv.style.setProperty('--ushakov-cookie-bg', options.bgColor);
+
     let cookieText = document.createElement('div')
     cookieText.className = 'ushakov-cookie__text'
 

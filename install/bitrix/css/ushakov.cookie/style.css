@@ -54,6 +54,11 @@
     text-decoration: none;
 }
 
+.ushakov-cookie-bg-custom {
+  background: var(--ushakov-cookie-bg, rgba(0, 0, 0, 0.85)) !important;
+}
+
+
 @media (min-width: 540px) {
     .ushakov-cookie br {
         display: none;
