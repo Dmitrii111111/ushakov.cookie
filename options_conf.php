@@ -61,6 +61,7 @@ while ($item = $res->fetch()) {
     //     'value' => '#34a0ff',
     // ];
 
+    // цвет ссылки
     $options[] = [
         'type' => 'custom',
         'name' => 'link_color_' . $item['LID'],
@@ -68,13 +69,23 @@ while ($item = $res->fetch()) {
         // 'value' => '#34a0ff',
         'html' => '<input type="color" name="link_color_' . $item["LID"] . '" value="' . htmlspecialcharsbx(Option::get("ushakov.cookie", "link_color_" . $item["LID"], "#34a0ff")) . '" style="width: 60px; height: 30px; padding: 0; border: none; cursor:pointer;">'
     ];
-    
+
+    // цвет текста плашки
+    $options[] = [
+        'type' => 'custom',
+        'name' => 'text_color_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_TEXT_COLOR'),
+        'html' => '<input type="color" name="text_color_' . $item["LID"] . '" value="' . 
+            htmlspecialcharsbx(\Bitrix\Main\Config\Option::get("ushakov.cookie", "text_color_" . $item["LID"], "#ffffffff")) . 
+            '" style="width: 60px; height: 30px; padding: 0; border: none; cursor:pointer;" class="spectrum-text-color">'
+    ];
+
+    // цвет плашки
     $options[] = [
         'type' => 'custom',
         'name' => 'bg_color_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_BG_COLOR'),
-        // 'value' => '#000000',
-        'html' => '<input type="color" name="bg_color_' . $item["LID"] . '" value="' . htmlspecialcharsbx(Option::get("ushakov.cookie", "bg_color_" . $item["LID"], "#000000")) . '" style="width: 60px; height: 30px; padding: 0; border: none; cursor:pointer;">'
+        'html' => '<input class="spectrum-bg-color" type="text" name="bg_color_' . $item["LID"] . '" value="' . htmlspecialcharsbx(\Bitrix\Main\Config\Option::get("ushakov.cookie", "bg_color_" . $item["LID"], "rgba(0,0,0,0.8)")) . '" style="width: 140px;">'
     ];
 
     $options[] = [

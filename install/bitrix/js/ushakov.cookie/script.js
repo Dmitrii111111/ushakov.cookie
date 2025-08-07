@@ -47,6 +47,9 @@
     innerDiv.classList.add('ushakov-cookie-bg-custom');
     innerDiv.style.setProperty('--ushakov-cookie-bg', options.bgColor);
 
+    innerDiv.style.setProperty('--ushakov-cookie-text-color', options.textColor);
+
+
     let cookieText = document.createElement('div')
     cookieText.className = 'ushakov-cookie__text'
 
@@ -56,6 +59,10 @@
       if (anchor) {
         anchor.style.color = options.color
       }
+    }
+
+    if (options.textColor) {
+      cookieText.style.color = options.textColor
     }
 
     // Вставляем или img, или span в зависимости от textButton

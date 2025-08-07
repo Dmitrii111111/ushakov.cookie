@@ -122,6 +122,29 @@ $tabControl->Begin();
     <input type="submit" name="RestoreDefaults" <?= $modulePerms < 'W' ? 'disabled' : '' ?> title="<?=GetMessage('MAIN_HINT_RESTORE_DEFAULTS')?>" OnClick="return confirm('<?=AddSlashes(GetMessage('MAIN_HINT_RESTORE_DEFAULTS_WARNING'))?>')" value="<?=GetMessage('MAIN_RESTORE_DEFAULTS')?>">
     <?=bitrix_sessid_post();?>
     <?php $tabControl->End();?>
+
+    <!-- Spectrum color picker -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js"></script>
+
+    <script>
+    BX.ready(function () {
+        const inputs = document.querySelectorAll('.spectrum-bg-color');
+        inputs.forEach(function(input) {
+        if (typeof $(input).spectrum === 'function') {
+            $(input).spectrum({
+            type: "component",
+            showAlpha: true,
+            preferredFormat: "rgb",
+            allowEmpty: false,
+            showInput: true
+            });
+        }
+        });
+    });
+    </script>
+
 </form>
 <style>
     .adm-detail-content-table > tbody > .heading td {

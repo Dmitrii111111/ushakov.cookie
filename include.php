@@ -28,4 +28,3 @@ if ($active === 'N' || strpos($_SERVER['REQUEST_URI'], '/bitrix/admin') !== fals
 
 Asset::getInstance()->addJs('/bitrix/js/ushakov.cookie/script.js');
 Asset::getInstance()->addCss('/bitrix/css/ushakov.cookie/style.css');
-
