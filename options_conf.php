@@ -95,7 +95,7 @@ while ($item = $res->fetch()) {
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_FONT_SIZE'),
         'value' => '14px',
         'size' => 6,
-        'placeholder' => 'напр. 14px или 1em'
+        'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_FONT_SIZE_PLACEHOLDER'),
     ];
 
     $options[] = [

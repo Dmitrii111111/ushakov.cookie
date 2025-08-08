@@ -13,7 +13,7 @@
     width: 100%;
     padding: 12px 8px 20px;
     background: rgb(0 0 0 / 78%);
-    font-size: 14px!important;
+    font-size: var(--ushakov-cookie-font-size, 14px) !important;
     line-height: 19px;
     display: flex;
     justify-content: space-between;

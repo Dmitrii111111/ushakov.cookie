@@ -49,6 +49,8 @@
 
     innerDiv.style.setProperty('--ushakov-cookie-text-color', options.textColor);
 
+    innerDiv.style.setProperty('--ushakov-cookie-font-size', options.fontSize);
+
 
     let cookieText = document.createElement('div')
     cookieText.className = 'ushakov-cookie__text'

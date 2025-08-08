@@ -11,6 +11,7 @@ $disableMob = Option::get('ushakov.cookie', 'disableMob_' . $siteId, 'N');
 $color = Option::get('ushakov.cookie', 'link_color_' . $siteId, '#34a0ff');
 $textColor = Option::get('ushakov.cookie', 'text_color_' . $siteId, '#ffffff');
 $bgColor = Option::get('ushakov.cookie', 'bg_color_' . $siteId, '#000000'); //цвет плашки
+$fontSize = Option::get('ushakov.cookie', 'font_size_' . $siteId, '14px');
 $zIndex = Option::get('ushakov.cookie', 'z_index_' . $siteId, '9999');
 $textButton = Option::get('ushakov.cookie', 'textButton_' . $siteId, '');
 
@@ -37,6 +38,7 @@ $responseData = [
         'color' => $color,
         'textColor' => $textColor,
         'bgColor' => $bgColor, // цвет плашки
+        'fontSize' => $fontSize,
         'zIndex' => intval($zIndex) >= 0 ? intval($zIndex) : '9999',
         'textButton' => $textButton ? : '',
     ]
