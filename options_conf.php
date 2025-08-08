@@ -76,7 +76,7 @@ while ($item = $res->fetch()) {
         'name' => 'text_color_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_TEXT_COLOR'),
         'html' => '<input type="color" name="text_color_' . $item["LID"] . '" value="' . 
-            htmlspecialcharsbx(\Bitrix\Main\Config\Option::get("ushakov.cookie", "text_color_" . $item["LID"], "#ffffffff")) . 
+            htmlspecialcharsbx(\Bitrix\Main\Config\Option::get("ushakov.cookie", "text_color_" . $item["LID"], "#ffffff")) . 
             '" style="width: 60px; height: 30px; padding: 0; border: none; cursor:pointer;" class="spectrum-text-color">'
     ];
 
@@ -86,6 +86,16 @@ while ($item = $res->fetch()) {
         'name' => 'bg_color_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_BG_COLOR'),
         'html' => '<input class="spectrum-bg-color" type="text" name="bg_color_' . $item["LID"] . '" value="' . htmlspecialcharsbx(\Bitrix\Main\Config\Option::get("ushakov.cookie", "bg_color_" . $item["LID"], "rgba(0,0,0,0.8)")) . '" style="width: 140px;">'
+    ];
+
+    // размер текста
+    $options[] = [
+        'type' => 'text',
+        'name' => 'font_size_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_FONT_SIZE'),
+        'value' => '14px',
+        'size' => 6,
+        'placeholder' => 'напр. 14px или 1em'
     ];
 
     $options[] = [
