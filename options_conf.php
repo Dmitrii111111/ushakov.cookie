@@ -98,6 +98,24 @@ while ($item = $res->fetch()) {
         'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_FONT_SIZE_PLACEHOLDER'),
     ];
 
+    // радиус скругления
+    $options[] = [
+        'type'  => 'text',
+        'name'  => 'border_radius_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_BORDER_RADIUS'),
+        'value' => '6px',
+        'size'  => 6,
+        'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_BORDER_RADIUS_PLACEHOLDER'),
+    ];
+
+    // тень (вкл/выкл)
+    $options[] = [
+        'type'  => 'checkbox',
+        'name'  => 'shadow_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_SHADOW'),
+        'value' => 'Y', // по умолчанию включена
+    ];
+
     $options[] = [
         'type' => 'text',
         'name' => 'z_index_' . $item['LID'],

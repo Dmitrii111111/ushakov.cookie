@@ -12,6 +12,8 @@ $color = Option::get('ushakov.cookie', 'link_color_' . $siteId, '#34a0ff');
 $textColor = Option::get('ushakov.cookie', 'text_color_' . $siteId, '#ffffff');
 $bgColor = Option::get('ushakov.cookie', 'bg_color_' . $siteId, '#000000'); //цвет плашки
 $fontSize = Option::get('ushakov.cookie', 'font_size_' . $siteId, '14px');
+$borderRadius = Option::get('ushakov.cookie', 'border_radius_' . $siteId, '6px');
+$shadow = Option::get('ushakov.cookie', 'shadow_' . $siteId, 'Y');
 $zIndex = Option::get('ushakov.cookie', 'z_index_' . $siteId, '9999');
 $textButton = Option::get('ushakov.cookie', 'textButton_' . $siteId, '');
 
@@ -29,6 +31,12 @@ if (trim($textTemplate) === '') {
 $textHtml = preg_replace('/#(.*?)#/', '<a href="' . $link . '" target="_blank">$1</a>', $textTemplate);
 $text = trim(strip_tags($textHtml, '<a><p><b><div><span><br>'));
 
+// простая валидация радиуса (разрешим px|rem|em|%)
+$borderRadius = trim($borderRadius);
+if (!preg_match('/^\d+(\.\d+)?(px|rem|em|%)$/i', $borderRadius)) {
+    $borderRadius = '6px';
+}
+
 $responseData = [
     'status' => 'success',
     'message' => 'Cookie applied successfully',
@@ -39,6 +47,8 @@ $responseData = [
         'textColor' => $textColor,
         'bgColor' => $bgColor, // цвет плашки
         'fontSize' => $fontSize,
+        'borderRadius' => $borderRadius,
+        'shadow' => in_array($shadow, ['Y','N'], true) ? $shadow : 'Y',
         'zIndex' => intval($zIndex) >= 0 ? intval($zIndex) : '9999',
         'textButton' => $textButton ? : '',
     ]

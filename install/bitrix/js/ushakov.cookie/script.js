@@ -51,6 +51,17 @@
 
     innerDiv.style.setProperty('--ushakov-cookie-font-size', options.fontSize);
 
+    // радиус
+    if (options.borderRadius) {
+      innerDiv.style.setProperty('--ushakov-cookie-radius', options.borderRadius);
+    }
+
+    // тень (вкл/выкл)
+    if (options.shadow === 'Y') {
+      innerDiv.style.setProperty('--ushakov-cookie-shadow', '0 8px 24px rgba(0, 0, 0, 0.85)');
+    } else {
+      innerDiv.style.setProperty('--ushakov-cookie-shadow', 'none');
+    }
 
     let cookieText = document.createElement('div')
     cookieText.className = 'ushakov-cookie__text'

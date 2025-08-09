@@ -18,8 +18,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 6px 6px 0 0;
-    color:#f1f1f1;
+    /* border-radius: 6px 6px 0 0; */
+    /* color:#f1f1f1; */
+
+    /* радиус и тень — через переменные */
+    border-radius: var(--ushakov-cookie-radius, 6px) var(--ushakov-cookie-radius, 6px) 0 0;
+    box-shadow: var(--ushakov-cookie-shadow, none);
 }
 
 .ushakov-cookie img {
@@ -71,7 +75,7 @@
     }
     .ushakov-cookie > div {
         width: initial;
-        border-radius: 6px;
+        border-radius: var(--ushakov-cookie-radius, 6px);
         padding: 6px 9px 6px;
     }
 }
