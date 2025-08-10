@@ -130,6 +130,18 @@ $options[] = [
     'heading' => Loc::getMessage('USHAKOV_COOKIE_OPT_COMMON'),
 ];
 
+// селект "Хранение согласия"
+$options[] = [
+    'type'  => 'list',
+    'name'  => 'consent_mode',
+    'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_CONSENT_MODE'),
+    'list'  => [
+        'days'    => Loc::getMessage('USHAKOV_COOKIE_OPT_CONSENT_MODE_DAYS'),
+        'session' => Loc::getMessage('USHAKOV_COOKIE_OPT_CONSENT_MODE_SESSION'),
+    ],
+    'value' => 'days', // дефолт — как и раньше: хранить N дней
+];
+
 $options[] = [
     'type' => 'text',
     'name' => 'days',

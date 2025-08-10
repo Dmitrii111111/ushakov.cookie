@@ -145,6 +145,24 @@ $tabControl->Begin();
     });
     </script>
 
+    <script>
+    BX.ready(function() {
+        var mode = document.querySelector('select[name="consent_mode"]');
+        var daysInput = document.querySelector('input[name="days"]');
+    if (!mode || !daysInput) return;
+
+    var daysRow = daysInput.closest('tr') || daysInput.parentElement.closest('tr');
+
+    function toggleDays() {
+        if (!daysRow) return;
+        daysRow.style.display = (mode.value === 'session') ? 'none' : '';
+    }
+
+    mode.addEventListener('change', toggleDays);
+    toggleDays(); // первичная установка при загрузке
+    });
+    </script>
+
 </form>
 <style>
     .adm-detail-content-table > tbody > .heading td {
