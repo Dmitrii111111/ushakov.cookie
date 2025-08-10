@@ -14,6 +14,12 @@ $bgColor = Option::get('ushakov.cookie', 'bg_color_' . $siteId, '#000000'); //ц
 $fontSize = Option::get('ushakov.cookie', 'font_size_' . $siteId, '14px');
 $borderRadius = Option::get('ushakov.cookie', 'border_radius_' . $siteId, '6px');
 $shadow = Option::get('ushakov.cookie', 'shadow_' . $siteId, 'Y');
+
+$position = Option::get('ushakov.cookie', 'position_' . $siteId, 'bottom');
+$maxWidth = Option::get('ushakov.cookie', 'max_width_' . $siteId, '640px');
+$offsetX  = Option::get('ushakov.cookie', 'offset_x_'  . $siteId, '0px');
+$offsetY  = Option::get('ushakov.cookie', 'offset_y_'  . $siteId, '7px');
+
 $zIndex = Option::get('ushakov.cookie', 'z_index_' . $siteId, '9999');
 $textButton = Option::get('ushakov.cookie', 'textButton_' . $siteId, '');
 
@@ -37,6 +43,13 @@ if (!preg_match('/^\d+(\.\d+)?(px|rem|em|%)$/i', $borderRadius)) {
     $borderRadius = '6px';
 }
 
+// нормализуем
+$position = ($position === 'top') ? 'top' : 'bottom';
+$unitRe = '/^\s*\d+(\.\d+)?(px|rem|em|%)\s*$/i';
+$maxWidth = preg_match($unitRe, $maxWidth) ? trim($maxWidth) : '640px';
+$offsetX  = preg_match($unitRe, $offsetX)  ? trim($offsetX)  : '0px';
+$offsetY  = preg_match($unitRe, $offsetY)  ? trim($offsetY)  : '7px';
+
 $responseData = [
     'status' => 'success',
     'message' => 'Cookie applied successfully',
@@ -49,6 +62,12 @@ $responseData = [
         'fontSize' => $fontSize,
         'borderRadius' => $borderRadius,
         'shadow' => in_array($shadow, ['Y','N'], true) ? $shadow : 'Y',
+
+        'position' => $position,
+        'maxWidth' => $maxWidth,
+        'offsetX'  => $offsetX,
+        'offsetY'  => $offsetY,
+
         'zIndex' => intval($zIndex) >= 0 ? intval($zIndex) : '9999',
         'textButton' => $textButton ? : '',
     ]

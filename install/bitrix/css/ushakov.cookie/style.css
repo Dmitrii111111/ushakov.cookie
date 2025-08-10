@@ -1,13 +1,17 @@
 .ushakov-cookie {
     position: fixed;
-    bottom: 0;
+    /* bottom: 0; */
     left: 0;
     width: 100%;
     display: flex;
     justify-content: center;
     z-index: 9999;
-    color: #ffffffb8;
+    /* color: #ffffffb8; */
 }
+
+    /* позиция */
+    .ushakov-cookie--pos-bottom { bottom: var(--ushakov-cookie-offset-y, 0); top: auto; }
+    .ushakov-cookie--pos-top { top: var(--ushakov-cookie-offset-y, 0); bottom: auto; }
 
 .ushakov-cookie > div {
     width: 100%;
@@ -24,6 +28,15 @@
     /* радиус и тень — через переменные */
     border-radius: var(--ushakov-cookie-radius, 6px) var(--ushakov-cookie-radius, 6px) 0 0;
     box-shadow: var(--ushakov-cookie-shadow, none);
+
+    /* новое: размеры и отступы */
+    max-width: var(--ushakov-cookie-max-width, 640px);
+    margin-left:  var(--ushakov-cookie-offset-x, 0);
+    margin-right: var(--ushakov-cookie-offset-x, 0);
+}
+
+.ushakov-cookie__text {
+    color: var(--ushakov-cookie-text-color, #f1f1f1);
 }
 
 .ushakov-cookie img {

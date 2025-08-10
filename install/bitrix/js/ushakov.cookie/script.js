@@ -43,6 +43,17 @@
       cookieDiv.classList.add('ushakov-cookie--d-mob-none')
     }
 
+    // позиция + вертикальный отступ для контейнера
+    if (options.position === 'top') {
+      cookieDiv.classList.add('ushakov-cookie--pos-top')
+      cookieDiv.style.top = options.offsetY || '0'
+      cookieDiv.style.bottom = 'auto'          // важно
+    } else {
+      cookieDiv.classList.add('ushakov-cookie--pos-bottom')
+      cookieDiv.style.bottom = options.offsetY || '0'
+      cookieDiv.style.top = 'auto'             // важно
+    }
+
     let innerDiv = document.createElement('div')
     innerDiv.classList.add('ushakov-cookie-bg-custom');
     innerDiv.style.setProperty('--ushakov-cookie-bg', options.bgColor);
@@ -62,6 +73,10 @@
     } else {
       innerDiv.style.setProperty('--ushakov-cookie-shadow', 'none');
     }
+
+    // макс. ширина и горизонтальные отступы
+    innerDiv.style.setProperty('--ushakov-cookie-max-width', options.maxWidth)
+    innerDiv.style.setProperty('--ushakov-cookie-offset-x', options.offsetX)
 
     let cookieText = document.createElement('div')
     cookieText.className = 'ushakov-cookie__text'

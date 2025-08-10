@@ -116,6 +116,48 @@ while ($item = $res->fetch()) {
         'value' => 'Y', // по умолчанию включена
     ];
 
+    // Позиция плашки
+    $options[] = [
+        'type'  => 'list',
+        'name'  => 'position_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_POSITION'),
+        'list'  => [
+            'bottom' => Loc::getMessage('USHAKOV_COOKIE_OPT_POSITION_BOTTOM'),
+            'top'    => Loc::getMessage('USHAKOV_COOKIE_OPT_POSITION_TOP'),
+        ],
+        'value' => 'bottom',
+    ];
+
+    // Макс. ширина (на десктопе)
+    $options[] = [
+        'type' => 'text',
+        'name' => 'max_width_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_MAX_WIDTH'),
+        'value' => '640px',
+        'size' => 8,
+        'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_MAX_WIDTH_PLACEHOLDER'),
+    ];
+
+    // Горизонтальный отступ
+    $options[] = [
+        'type' => 'text',
+        'name' => 'offset_x_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_OFFSET_X'),
+        'value' => '0px',
+        'size' => 6,
+        'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_OFFSET_X_PLACEHOLDER'),
+    ];
+
+    // Вертикальный отступ
+    $options[] = [
+        'type' => 'text',
+        'name' => 'offset_y_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_OFFSET_Y'),
+        'value' => '7px',
+        'size' => 6,
+        'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_OFFSET_Y_PLACEHOLDER'),
+    ];
+
     $options[] = [
         'type' => 'text',
         'name' => 'z_index_' . $item['LID'],
@@ -139,7 +181,7 @@ $options[] = [
         'days'    => Loc::getMessage('USHAKOV_COOKIE_OPT_CONSENT_MODE_DAYS'),
         'session' => Loc::getMessage('USHAKOV_COOKIE_OPT_CONSENT_MODE_SESSION'),
     ],
-    'value' => 'days', // дефолт — как и раньше: хранить N дней
+    'value' => 'days', // дефолт: хранить N дней
 ];
 
 $options[] = [
