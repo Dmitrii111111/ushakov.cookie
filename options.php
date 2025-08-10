@@ -163,6 +163,25 @@ $tabControl->Begin();
     });
     </script>
 
+    <script>
+    BX.ready(function () {
+        var input = document.getElementById('delay_ms');
+        var hint  = document.getElementById('delay_ms_hint');
+    if (!input || !hint) return;
+
+    function updateHint() {
+        var v = parseInt(input.value, 10);
+        if (!isNaN(v) && v > 0) {
+        hint.textContent = '≈ ' + (v / 1000).toFixed(2) + ' сек';
+        } else {
+        hint.textContent = '';
+        }
+    }
+    input.addEventListener('input', updateHint);
+    updateHint();
+    });
+    </script>
+
 </form>
 <style>
     .adm-detail-content-table > tbody > .heading td {

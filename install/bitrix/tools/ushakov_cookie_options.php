@@ -10,7 +10,7 @@ $siteId = trim(strip_tags($siteId));
 $disableMob = Option::get('ushakov.cookie', 'disableMob_' . $siteId, 'N');
 $color = Option::get('ushakov.cookie', 'link_color_' . $siteId, '#34a0ff');
 $textColor = Option::get('ushakov.cookie', 'text_color_' . $siteId, '#ffffff');
-$bgColor = Option::get('ushakov.cookie', 'bg_color_' . $siteId, '#000000'); //цвет плашки
+$bgColor = Option::get('ushakov.cookie', 'bg_color_' . $siteId, 'rgba(0, 0, 0, 0.85)'); //цвет плашки
 $fontSize = Option::get('ushakov.cookie', 'font_size_' . $siteId, '14px');
 $borderRadius = Option::get('ushakov.cookie', 'border_radius_' . $siteId, '6px');
 $shadow = Option::get('ushakov.cookie', 'shadow_' . $siteId, 'Y');
@@ -21,6 +21,8 @@ $offsetX  = Option::get('ushakov.cookie', 'offset_x_'  . $siteId, '0px');
 $offsetY  = Option::get('ushakov.cookie', 'offset_y_'  . $siteId, '7px');
 
 $zIndex = Option::get('ushakov.cookie', 'z_index_' . $siteId, '9999');
+$delayMs = \Bitrix\Main\Config\Option::get('ushakov.cookie', 'delay_ms', '0');
+$delayMs = (is_numeric($delayMs) && (int)$delayMs >= 0) ? (int)$delayMs : 0;
 $textButton = Option::get('ushakov.cookie', 'textButton_' . $siteId, '');
 
 // Замена текста в решётках на тег <a>
@@ -69,6 +71,7 @@ $responseData = [
         'offsetY'  => $offsetY,
 
         'zIndex' => intval($zIndex) >= 0 ? intval($zIndex) : '9999',
+        'delayMs' => $delayMs,
         'textButton' => $textButton ? : '',
     ]
 ];

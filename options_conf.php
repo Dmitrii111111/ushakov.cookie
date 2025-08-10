@@ -85,7 +85,7 @@ while ($item = $res->fetch()) {
         'type' => 'custom',
         'name' => 'bg_color_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_BG_COLOR'),
-        'html' => '<input class="spectrum-bg-color" type="text" name="bg_color_' . $item["LID"] . '" value="' . htmlspecialcharsbx(\Bitrix\Main\Config\Option::get("ushakov.cookie", "bg_color_" . $item["LID"], "rgba(0,0,0,0.8)")) . '" style="width: 140px;">'
+        'html' => '<input class="spectrum-bg-color" type="text" name="bg_color_' . $item["LID"] . '" value="' . htmlspecialcharsbx(\Bitrix\Main\Config\Option::get("ushakov.cookie", "bg_color_" . $item["LID"], "rgba(0, 0, 0, 0.85)")) . '" style="width: 140px;">'
     ];
 
     // размер текста
@@ -190,6 +190,26 @@ $options[] = [
     'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_DAYS'),
     'value' => '365',
     'size' => '10'
+];
+
+// $options[] = [
+//     'type'  => 'text',
+//     'name'  => 'delay_ms',
+//     'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_DELAY_MS'),
+//     'value' => '0',
+//     'size'  => 8,
+//     'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_DELAY_MS_PLACEHOLDER'),
+// ];
+
+$options[] = [
+    'type'  => 'custom',
+    'name'  => 'delay_ms',
+    'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_DELAY_MS'),
+    'html'  => '<input type="number" id="delay_ms" name="delay_ms" value="' .
+        htmlspecialcharsbx(\Bitrix\Main\Config\Option::get("ushakov.cookie", "delay_ms", "0")) .
+        '" min="0" step="100" style="width: 120px;">' .
+        '<span style="margin-left:8px;color:#80868b;">мс (1000 мс = 1 сек.)</span>' .
+        '<span id="delay_ms_hint" style="margin-left:12px;color:#80868b;"></span>',
 ];
 
 $options[] = [

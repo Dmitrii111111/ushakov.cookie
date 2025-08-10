@@ -22,14 +22,21 @@
   })
 
 
-  function handleContentLoaded (options) {
+  function handleContentLoaded (response) {
+    const cfg = response && response.data ? response.data : {};
+    const delay = parseInt(cfg.delayMs, 10);
+    const run = () => {
+      if (!isNaN(delay) && delay > 0) {
+        setTimeout(() => insertCookieDiv(cfg), delay);
+      } else {
+        insertCookieDiv(cfg);
+      }
+    };
+
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function () {
-        insertCookieDiv(options.data)
-      })
-    }
-    else {
-      insertCookieDiv(options.data)
+      document.addEventListener('DOMContentLoaded', run);
+    } else {
+      run();
     }
   }
 
