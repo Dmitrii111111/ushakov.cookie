@@ -128,6 +128,19 @@ while ($item = $res->fetch()) {
         'value' => 'bottom',
     ];
 
+    // Выравнивание (слева/центр/справа)
+    $options[] = [
+        'type'  => 'list',
+        'name'  => 'align_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_ALIGN'),
+        'list'  => [
+            'left'   => Loc::getMessage('USHAKOV_COOKIE_OPT_ALIGN_LEFT'),
+            'center' => Loc::getMessage('USHAKOV_COOKIE_OPT_ALIGN_CENTER'),
+            'right'  => Loc::getMessage('USHAKOV_COOKIE_OPT_ALIGN_RIGHT'),
+        ],
+        'value' => 'center',
+    ];
+
     // Макс. ширина (на десктопе)
     $options[] = [
         'type' => 'text',

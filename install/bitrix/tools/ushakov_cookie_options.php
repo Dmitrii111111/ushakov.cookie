@@ -16,6 +16,10 @@ $borderRadius = Option::get('ushakov.cookie', 'border_radius_' . $siteId, '6px')
 $shadow = Option::get('ushakov.cookie', 'shadow_' . $siteId, 'Y');
 
 $position = Option::get('ushakov.cookie', 'position_' . $siteId, 'bottom');
+
+$align = Option::get('ushakov.cookie', 'align_' . $siteId, 'center');
+$align = in_array($align, ['left','center','right'], true) ? $align : 'center';
+
 $maxWidth = Option::get('ushakov.cookie', 'max_width_' . $siteId, '640px');
 $offsetX  = Option::get('ushakov.cookie', 'offset_x_'  . $siteId, '0px');
 $offsetY  = Option::get('ushakov.cookie', 'offset_y_'  . $siteId, '7px');
@@ -66,6 +70,9 @@ $responseData = [
         'shadow' => in_array($shadow, ['Y','N'], true) ? $shadow : 'Y',
 
         'position' => $position,
+
+        'align' => $align,
+
         'maxWidth' => $maxWidth,
         'offsetX'  => $offsetX,
         'offsetY'  => $offsetY,

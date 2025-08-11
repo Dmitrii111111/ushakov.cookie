@@ -75,6 +75,24 @@
   background: var(--ushakov-cookie-bg, rgba(0, 0, 0, 0.85)) !important;
 }
 
+/* выравнивание контейнера по горизонтали */
+.ushakov-cookie--align-left   { justify-content: flex-start; }
+.ushakov-cookie--align-center { justify-content: center; }
+.ushakov-cookie--align-right  { justify-content: flex-end; }
+
+/* отступы от краёв в зависимости от выравнивания */
+.ushakov-cookie--align-left > div {
+  margin-left:  var(--ushakov-cookie-offset-x, 0);
+  margin-right: 0;
+}
+.ushakov-cookie--align-center > div {
+  margin-left:  var(--ushakov-cookie-offset-x, 0);
+  margin-right: var(--ushakov-cookie-offset-x, 0);
+}
+.ushakov-cookie--align-right > div {
+  margin-right: var(--ushakov-cookie-offset-x, 0);
+  margin-left:  0;
+}
 
 @media (min-width: 540px) {
     .ushakov-cookie br {

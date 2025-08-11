@@ -81,6 +81,10 @@
       innerDiv.style.setProperty('--ushakov-cookie-shadow', 'none');
     }
 
+    // выравнивание
+    const align = options.align || 'center';
+    cookieDiv.classList.add('ushakov-cookie--align-' + align);
+
     // макс. ширина и горизонтальные отступы
     innerDiv.style.setProperty('--ushakov-cookie-max-width', options.maxWidth)
     innerDiv.style.setProperty('--ushakov-cookie-offset-x', options.offsetX)

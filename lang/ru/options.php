@@ -18,6 +18,12 @@ $MESS['USHAKOV_COOKIE_OPT_SHADOW'] = "Тень плашки";
 $MESS['USHAKOV_COOKIE_OPT_POSITION'] = "Позиция плашки";
 $MESS['USHAKOV_COOKIE_OPT_POSITION_BOTTOM'] = "Снизу";
 $MESS['USHAKOV_COOKIE_OPT_POSITION_TOP'] = "Сверху";
+
+$MESS['USHAKOV_COOKIE_OPT_ALIGN'] = "Выравнивание";
+$MESS['USHAKOV_COOKIE_OPT_ALIGN_LEFT'] = "Слева";
+$MESS['USHAKOV_COOKIE_OPT_ALIGN_CENTER'] = "По центру";
+$MESS['USHAKOV_COOKIE_OPT_ALIGN_RIGHT'] = "Справа";
+
 $MESS['USHAKOV_COOKIE_OPT_MAX_WIDTH'] = "Максимальная ширина (десктоп)";
 $MESS['USHAKOV_COOKIE_OPT_MAX_WIDTH_PLACEHOLDER'] = "напр. 640px";
 $MESS['USHAKOV_COOKIE_OPT_OFFSET_X'] = "Горизонтальный отступ (слева/справа)";
