@@ -124,10 +124,11 @@ $tabControl->Begin();
     <?php $tabControl->End();?>
 
     <!-- Spectrum color picker -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js"></script>
-
+    <?php
+    $APPLICATION->AddHeadScript('/bitrix/js/ushakov.cookie/jquery-3.6.0.min.js');
+    $APPLICATION->SetAdditionalCSS('/bitrix/css/ushakov.cookie/spectrum.min.css');
+    $APPLICATION->AddHeadScript('/bitrix/js/ushakov.cookie/spectrum.min.js');
+    ?>
     <script>
     BX.ready(function () {
         const inputs = document.querySelectorAll('.spectrum-bg-color');

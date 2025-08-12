@@ -8,10 +8,7 @@ $siteId = $_POST['SITE_ID'] ?? 's1';
 $siteId = trim(strip_tags($siteId));
 
 $disableMob = Option::get('ushakov.cookie', 'disableMob_' . $siteId, 'N');
-$color = Option::get('ushakov.cookie', 'link_color_' . $siteId, '#34a0ff');
-$textColor = Option::get('ushakov.cookie', 'text_color_' . $siteId, '#ffffff');
 $bgColor = Option::get('ushakov.cookie', 'bg_color_' . $siteId, 'rgba(0, 0, 0, 0.85)'); //цвет плашки
-$fontSize = Option::get('ushakov.cookie', 'font_size_' . $siteId, '14px');
 $borderRadius = Option::get('ushakov.cookie', 'border_radius_' . $siteId, '6px');
 $shadow = Option::get('ushakov.cookie', 'shadow_' . $siteId, 'Y');
 
@@ -37,11 +34,13 @@ if (trim($link) === '') {
 // $textTemplate = Option::get('ushakov.cookie', 'text_' . $siteId);
 $textTemplate = Option::get('ushakov.cookie', 'text_' . $siteId, '');
 if (trim($textTemplate) === '') {
-    $textTemplate = 'Пользуясь нашим сайтом, вы соглашаетесь с тем, что #мы используем cookies#';
+    $textTemplate = 'Мы используем файлы cookie для обеспечения работы сайта, сбора анонимной статистики и улучшения пользовательского опыта. Продолжая использование сайта, вы соглашаетесь на обработку ваших данных с использованием cookie-файлов в соответствии с нашей политикой конфиденциальности.';
 }
 
-$textHtml = preg_replace('/#(.*?)#/', '<a href="' . $link . '" target="_blank">$1</a>', $textTemplate);
-$text = trim(strip_tags($textHtml, '<a><p><b><div><span><br>'));
+$allowed = '<a><p><b><strong><i><em><u><br><div><span><font>'
+         . '<ul><ol><li>'
+         . '<h1><h2><h3><h4><h5><h6><blockquote>';
+$text = trim(strip_tags($textTemplate, $allowed));
 
 // простая валидация радиуса (разрешим px|rem|em|%)
 $borderRadius = trim($borderRadius);
@@ -62,10 +61,7 @@ $responseData = [
     'data' => [
         'disableMob' => in_array($disableMob, ['Y', 'N']) ? $disableMob : 'N',
         'text' => $text,
-        'color' => $color,
-        'textColor' => $textColor,
         'bgColor' => $bgColor, // цвет плашки
-        'fontSize' => $fontSize,
         'borderRadius' => $borderRadius,
         'shadow' => in_array($shadow, ['Y','N'], true) ? $shadow : 'Y',
 

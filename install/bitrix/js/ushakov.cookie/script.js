@@ -93,16 +93,6 @@
     cookieText.className = 'ushakov-cookie__text'
 
     cookieText.innerHTML = options.text
-    if (options.color) {
-      let anchor = cookieText.querySelector('a')
-      if (anchor) {
-        anchor.style.color = options.color
-      }
-    }
-
-    if (options.textColor) {
-      cookieText.style.color = options.textColor
-    }
 
     // Вставляем или img, или span в зависимости от textButton
     let closeElement

@@ -1,12 +1,10 @@
 .ushakov-cookie {
     position: fixed;
-    /* bottom: 0; */
     left: 0;
     width: 100%;
     display: flex;
     justify-content: center;
     z-index: 9999;
-    /* color: #ffffffb8; */
 }
 
     /* позиция */
@@ -17,13 +15,10 @@
     width: 100%;
     padding: 12px 8px 20px;
     background: rgb(0 0 0 / 78%);
-    font-size: var(--ushakov-cookie-font-size, 14px) !important;
     line-height: 19px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border-radius: 6px 6px 0 0; */
-    /* color:#f1f1f1; */
 
     /* радиус и тень — через переменные */
     border-radius: var(--ushakov-cookie-radius, 6px) var(--ushakov-cookie-radius, 6px) 0 0;
@@ -36,7 +31,8 @@
 }
 
 .ushakov-cookie__text {
-    color: var(--ushakov-cookie-text-color, #f1f1f1);
+    color: #f1f1f1;
+    font-size: 14px
 }
 
 .ushakov-cookie img {
@@ -94,11 +90,11 @@
   margin-left:  0;
 }
 
-@media (min-width: 540px) {
+/* @media (min-width: 540px) {
     .ushakov-cookie br {
         display: none;
     }
-}
+} */
 
 @media (min-width: 640px) {
     .ushakov-cookie {

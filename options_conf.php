@@ -2,7 +2,6 @@
 
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\SiteTable;
-use Bitrix\Main\Config\Option;
 
 Loc::loadMessages(dirname(__FILE__) . '/options.php');
 
@@ -31,18 +30,98 @@ while ($item = $res->fetch()) {
     ];
 
     $options[] = [
-        'type' => 'textarea',
-        'name' => 'text_' . $item['LID'],
+        'type'  => 'custom',
+        'name'  => 'text_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_TEXT_LABEL'),
-        'value' => Loc::getMessage('USHAKOV_COOKIE_OPT_TEXT'),
-        'rows' => 3,
-    ];
+        'html'  => (function() use ($item) {
+            $name    = 'text_' . $item['LID'];
+            $default = Loc::getMessage('USHAKOV_COOKIE_OPT_TEXT');
+            $content = \Bitrix\Main\Config\Option::get('ushakov.cookie', $name, $default);
 
-    $options[] = [
-        'type' => 'text',
-        'name' => 'link_' . $item['LID'],
-        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_LINK'),
-        'value' => $item['DIR'] . 'cookies-agreement.php',
+            if (\Bitrix\Main\Loader::includeModule('fileman')) {
+                ob_start();
+                $editor = new \CHTMLEditor();
+                $editor->Show([
+                    'id'                  => $name,
+                    'inputName'           => $name,
+                    'content'             => $content,
+                    'siteId'              => $item['LID'],
+
+                    'width'               => '100%',
+                    'height'              => 220,
+                    'autoResize'          => true,
+                    'autoResizeOffset'    => 40,
+                    'bbCode'              => false,
+                    'useFileDialogs'      => false,
+                    'askBeforeUnloadPage' => false,
+                    'showNodeNavi'        => false,
+                    'showTaskbars'        => false,
+                    'SeoUniqText'         => false,
+
+                    // ['SearchButton', 'ChangeView', 'Undo', 'Redo', 'StyleSelector', 'FontSelector', 'FontSize', 'Bold', 'Italic', 'Underline', 'Strikeout', 'Color', 'RemoveFormat', 'TemplateSelector', 'OrderedList', 'UnorderedList', 'IndentButton', 'OutdentButton', 'AlignList', 'InsertLink', 'InsertImage', 'InsertVideo', 'InsertAnchor', 'InsertTable', 'InsertChar', 'Settings', 'Fullscreen', 'PrintBreak', 'PageBreak', 'InsertHr', 'Spellcheck', 'Code', 'Quote', 'Smile', 'Sub', 'Sup', 'More', 'BbCode', 'SeoUniqText']
+                    // SearchButton — поиск/замена по содержимому редактора.
+                    // ChangeView — переключение режимов: визуальный / HTML-код / сплит.
+                    // Undo / Redo — отмена/повтор последнего действия (Ctrl+Z / Ctrl+Y).
+                    // StyleSelector — выпадающий список “Абзац / Заголовок H1–H6 / и т.п.” Меняет блочную обёртку (<p>, <h1>…).
+                    // FontSelector — выбор шрифта, добавляет inline-стиль font-family (обычно <span style="font-family:...">).
+                    // FontSize — размер шрифта, даёт inline-стиль font-size.
+                    // Bold / Italic / Underline / Strikeout — жирный, курсив, подчёркивание, зачёркивание (<b>/<strong>, <i>/<em>, <u>, <s>/<strike>).
+                    // Color — цвет текста и/или фона текста; выдаёт <span style="color:..."> и/или background-color.
+                    // RemoveFormat — убрать форматирование (чистит лишние <span style=...>, <b>, и т.д.).
+                    // TemplateSelector — выбор шаблона сайта для предпросмотра стилей внутри фрейма редактора (чаще всего не нужен в настройках модуля).
+                    // OrderedList / UnorderedList — нумерованный/маркированный список (<ol> / <ul> + <li>).
+                    // IndentButton / OutdentButton — увеличить/уменьшить отступ; в списках меняет вложенность (<li> внутри <ol>/<ul>), вне списков может добавлять стилевой отступ/обёртку.
+                    // AlignList — группа выравнивания: по левому/центру/правому краю, по ширине (эквивалентно text-align: left/center/right/justify).
+                    // InsertLink — вставить/редактировать ссылку (<a href>).
+                    // InsertImage — вставить картинку (с диалогом файла, работает при установленном fileman).
+                    // InsertVideo — вставить видео (YouTube/Vimeo и т.п., вставляет <iframe>/встраивание).
+                    // InsertAnchor — якорь на странице (<a name="..."> или id).
+                    // InsertTable — вставка/редактирование таблиц (<table>, thead/tbody, кол-во строк/столбцов).
+                    // InsertChar — “спецсимвол” (набор символов типа ™, ©, ↑ и др.).
+                    // Settings — настройки редактора (панели, поведение и т.д.).
+                    // Fullscreen — на весь экран.
+                    // PrintBreak — “разрыв для печати” (служебная метка для печатных шаблонов Bitrix).
+                    // PageBreak — “разделитель страниц” (служебный тег <BREAK />, используется некоторыми компонентами/шаблонами для пагинации контента).
+                    // InsertHr — горизонтальная линия (<hr>).
+                    // Spellcheck — орфография (если доступна конфигурация словаря).
+                    // Code — оформление как код (обычно <pre><code> или аналогичный блочный стиль).
+                    // Quote — цитата (<blockquote> или стилизованный блок).
+                    // Smile — смайлики (вставляет изображения/эмодзи, если разрешено).
+                    // Sub / Sup — нижний/верхний индекс (<sub>, <sup>).
+                    // More — “Ещё…”: выпадающий контейнер для лишних кнопок, если панель узкая.
+                    // BbCode — переключатель BB-кода (меняет модель разметки; обычно не используем, если хотим чистый HTML).
+                    // SeoUniqText — служебная кнопка модуля SEO Bitrix “Отправить уникальный текст в Яндекс”.
+
+                        // минимальный набор
+                        'controlsMap' => [
+                            ['id' => 'ChangeView',    'compact' => true],
+                            ['id' => 'StyleSelector', 'compact' => true],
+                            ['id' => 'FontSelector',  'compact' => true],
+                            ['id' => 'FontSize',      'compact' => true],
+                            ['id' => 'Bold',          'compact' => true],
+                            ['id' => 'Italic',        'compact' => true],
+                            ['id' => 'Underline',     'compact' => true],
+                            ['id' => 'AlignList',     'compact' => true],
+                            ['id' => 'InsertLink',    'compact' => true],
+                            ['id' => 'Color',         'compact' => true],
+                            ['id' => 'Undo',          'compact' => true],
+                            ['id' => 'Redo',          'compact' => true],
+                            ['id' => 'OrderedList',   'compact' => true],
+                            ['id' => 'UnorderedList', 'compact' => true],
+                            ['id' => 'IndentButton',  'compact' => true],
+                            ['id' => 'OutdentButton', 'compact' => true],
+                            ['id' => 'InsertChar',    'compact' => true],
+                            ['id' => 'Fullscreen',    'compact' => true],
+                        ],
+                ]);
+                return ob_get_clean();
+            }
+
+            // Фолбэк, если fileman недоступен
+            return '<textarea name="' . htmlspecialcharsbx($name) . '" cols="43" rows="4">' .
+                htmlspecialcharsbx($content) .
+                '</textarea>';
+        })(),
     ];
 
     $options[] = [
@@ -53,49 +132,12 @@ while ($item = $res->fetch()) {
         'placeholder' => Loc::getMessage('USHAKOV_COOKIE_TEXT_BUTTON_PLACEHOLDER'),
     ];
 
-    // цвет кодом
-    // $options[] = [
-    //     'type' => 'text',
-    //     'name' => 'link_color_' . $item['LID'],
-    //     'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_LINK_COLOR'),
-    //     'value' => '#34a0ff',
-    // ];
-
-    // цвет ссылки
-    $options[] = [
-        'type' => 'custom',
-        'name' => 'link_color_' . $item['LID'],
-        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_LINK_COLOR'),
-        // 'value' => '#34a0ff',
-        'html' => '<input type="color" name="link_color_' . $item["LID"] . '" value="' . htmlspecialcharsbx(Option::get("ushakov.cookie", "link_color_" . $item["LID"], "#34a0ff")) . '" style="width: 60px; height: 30px; padding: 0; border: none; cursor:pointer;">'
-    ];
-
-    // цвет текста плашки
-    $options[] = [
-        'type' => 'custom',
-        'name' => 'text_color_' . $item['LID'],
-        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_TEXT_COLOR'),
-        'html' => '<input type="color" name="text_color_' . $item["LID"] . '" value="' . 
-            htmlspecialcharsbx(\Bitrix\Main\Config\Option::get("ushakov.cookie", "text_color_" . $item["LID"], "#ffffff")) . 
-            '" style="width: 60px; height: 30px; padding: 0; border: none; cursor:pointer;" class="spectrum-text-color">'
-    ];
-
     // цвет плашки
     $options[] = [
         'type' => 'custom',
         'name' => 'bg_color_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_BG_COLOR'),
         'html' => '<input class="spectrum-bg-color" type="text" name="bg_color_' . $item["LID"] . '" value="' . htmlspecialcharsbx(\Bitrix\Main\Config\Option::get("ushakov.cookie", "bg_color_" . $item["LID"], "rgba(0, 0, 0, 0.85)")) . '" style="width: 140px;">'
-    ];
-
-    // размер текста
-    $options[] = [
-        'type' => 'text',
-        'name' => 'font_size_' . $item['LID'],
-        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_FONT_SIZE'),
-        'value' => '14px',
-        'size' => 6,
-        'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_FONT_SIZE_PLACEHOLDER'),
     ];
 
     // радиус скругления
@@ -204,15 +246,6 @@ $options[] = [
     'value' => '365',
     'size' => '10'
 ];
-
-// $options[] = [
-//     'type'  => 'text',
-//     'name'  => 'delay_ms',
-//     'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_DELAY_MS'),
-//     'value' => '0',
-//     'size'  => 8,
-//     'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_DELAY_MS_PLACEHOLDER'),
-// ];
 
 $options[] = [
     'type'  => 'custom',
