@@ -132,6 +132,55 @@ while ($item = $res->fetch()) {
         'placeholder' => Loc::getMessage('USHAKOV_COOKIE_TEXT_BUTTON_PLACEHOLDER'),
     ];
 
+    $options[] = [
+        'type'  => 'list',
+        'name'  => 'accept_btn_position_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_ACCEPT_BTN_POSITION'),
+        'list'  => [
+            'left'   => Loc::getMessage('USHAKOV_COOKIE_OPT_ACCEPT_BTN_POSITION_LEFT'),
+            'right'  => Loc::getMessage('USHAKOV_COOKIE_OPT_ACCEPT_BTN_POSITION_RIGHT'),
+            'bottom' => Loc::getMessage('USHAKOV_COOKIE_OPT_ACCEPT_BTN_POSITION_BOTTOM'),
+        ],
+        'value' => 'right',
+    ];
+
+    $options[] = [
+        'type'  => 'list',
+        'name'  => 'close_btn_position_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_CLOSE_BTN_POSITION'),
+        'list'  => [
+            'left-top'        => Loc::getMessage('USHAKOV_COOKIE_OPT_CLOSE_BTN_POSITION_LEFT_TOP'),
+            'right-top'       => Loc::getMessage('USHAKOV_COOKIE_OPT_CLOSE_BTN_POSITION_RIGHT_TOP'),
+            'left-middle'     => Loc::getMessage('USHAKOV_COOKIE_OPT_CLOSE_BTN_POSITION_LEFT_MIDDLE'),
+            'right-middle'    => Loc::getMessage('USHAKOV_COOKIE_OPT_CLOSE_BTN_POSITION_RIGHT_MIDDLE'),
+        ],
+        'value' => 'right-top',
+    ];
+
+    $acceptBg = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'accept_btn_bg_color_' . $item['LID'], '#4CAF50'));
+    $options[] = [
+        'type'  => 'custom',
+        'name'  => 'accept_btn_bg_color_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_ACCEPT_BTN_BG_COLOR'),
+        'html'  => '<input class="spectrum-bg-color" type="text" name="accept_btn_bg_color_' . $item['LID'] . '" value="' . $acceptBg . '" style="width:140px;">',
+    ];
+
+    $acceptText = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'accept_btn_text_color_' . $item['LID'], '#FFFFFF'));
+    $options[] = [
+        'type'  => 'custom',
+        'name'  => 'accept_btn_text_color_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_ACCEPT_BTN_TEXT_COLOR'),
+        'html'  => '<input class="spectrum-bg-color" type="text" name="accept_btn_text_color_' . $item['LID'] . '" value="' . $acceptText . '" style="width:140px;">',
+    ];
+
+    $closeColor = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'close_btn_color_' . $item['LID'], 'rgb(255, 7, 7)'));
+    $options[] = [
+        'type'  => 'custom',
+        'name'  => 'close_btn_color_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_CLOSE_BTN_COLOR'),
+        'html'  => '<input class="spectrum-bg-color" type="text" name="close_btn_color_' . $item['LID'] . '" value="' . $closeColor . '" style="width:140px;">',
+    ];
+
     // цвет плашки
     $options[] = [
         'type' => 'custom',

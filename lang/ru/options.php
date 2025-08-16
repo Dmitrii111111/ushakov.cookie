@@ -42,4 +42,24 @@ $MESS['USHAKOV_COOKIE_OPT_DELAY_MS'] = "Задержка показа, мс";
 $MESS["USHAKOV_COOKIE_OPT_HELP_MESSAGE"] = "В тексте предупреждения, там, где вы хотите сделать ссылку, заключите <b>#текст ссылки#</b> в символ решетки.<br><b>Код цвета ссылки</b> – на самом деле значение css-свойства color, поэтому можно использовать rgb или название цвета.";
 $MESS["USHAKOV_COOKIE_TEXT_BUTTON"] = "Принять";
 $MESS["USHAKOV_COOKIE_TEXT_BUTTON_LABEL"] = "Текст кнопки";
-$MESS["USHAKOV_COOKIE_TEXT_BUTTON_PLACEHOLDER"] = "Можно оставить пустым – будет крестик";
+$MESS["USHAKOV_COOKIE_TEXT_BUTTON_PLACEHOLDER"] = "Если оставить пустым – будет крестик";
+
+// Положение кнопки согласия
+$MESS["USHAKOV_COOKIE_OPT_ACCEPT_BTN_POSITION"] = "Положение кнопки согласия";
+$MESS["USHAKOV_COOKIE_OPT_ACCEPT_BTN_POSITION_LEFT"] = "Слева от текста";
+$MESS["USHAKOV_COOKIE_OPT_ACCEPT_BTN_POSITION_RIGHT"] = "Справа от текста";
+$MESS["USHAKOV_COOKIE_OPT_ACCEPT_BTN_POSITION_BOTTOM"] = "Под текстом";
+
+// Положение крестика
+$MESS["USHAKOV_COOKIE_OPT_CLOSE_BTN_POSITION"] = "Положение крестика";
+$MESS["USHAKOV_COOKIE_OPT_CLOSE_BTN_POSITION_LEFT_TOP"] = "Слева сверху";
+$MESS["USHAKOV_COOKIE_OPT_CLOSE_BTN_POSITION_RIGHT_TOP"] = "Справа сверху";
+$MESS["USHAKOV_COOKIE_OPT_CLOSE_BTN_POSITION_LEFT_MIDDLE"] = "Слева по середине (рядом с текстом)";
+$MESS["USHAKOV_COOKIE_OPT_CLOSE_BTN_POSITION_RIGHT_MIDDLE"] = "Справа по середине (рядом с текстом)";
+
+// Цвета кнопки
+$MESS["USHAKOV_COOKIE_OPT_ACCEPT_BTN_BG_COLOR"] = "Цвет фона кнопки";
+$MESS["USHAKOV_COOKIE_OPT_ACCEPT_BTN_TEXT_COLOR"] = "Цвет текста кнопки";
+
+// Цвет крестика
+$MESS["USHAKOV_COOKIE_OPT_CLOSE_BTN_COLOR"] = "Цвет иконки закрытия (крестик)";

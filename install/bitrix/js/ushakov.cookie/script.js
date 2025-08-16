@@ -22,6 +22,51 @@
   })
 
 
+  // Функция для затемнения цвета (для hover-эффекта кнопки)
+  function darkenColor(color, amount) {
+    // Проверяем, это RGB или HEX цвет
+    if (color.startsWith('rgb')) {
+      // Парсим RGB цвет: rgb(76, 175, 80)
+      const rgbMatch = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+      if (rgbMatch) {
+        const r = parseInt(rgbMatch[1]);
+        const g = parseInt(rgbMatch[2]);
+        const b = parseInt(rgbMatch[3]);
+        
+        // Затемняем на указанное количество (0.2 = на 20%)
+        const darkerR = Math.max(0, Math.floor(r * (1 - amount)));
+        const darkerG = Math.max(0, Math.floor(g * (1 - amount)));
+        const darkerB = Math.max(0, Math.floor(b * (1 - amount)));
+        
+        // Возвращаем в RGB формате
+        return `rgb(${darkerR}, ${darkerG}, ${darkerB})`;
+      }
+    } else if (color.startsWith('#')) {
+      // Парсим HEX цвет: #4CAF50
+      const hex = color.replace('#', '');
+      
+      // Парсим RGB компоненты
+      const r = parseInt(hex.substr(0, 2), 16);
+      const g = parseInt(hex.substr(2, 2), 16);
+      const b = parseInt(hex.substr(4, 2), 16);
+      
+      // Затемняем на указанное количество (0.2 = на 20%)
+      const darkerR = Math.max(0, Math.floor(r * (1 - amount)));
+      const darkerG = Math.max(0, Math.floor(g * (1 - amount)));
+      const darkerB = Math.max(0, Math.floor(b * (1 - amount)));
+      
+      // Возвращаем в hex формате
+      return '#' + 
+             (darkerR < 16 ? '0' : '') + darkerR.toString(16) +
+             (darkerG < 16 ? '0' : '') + darkerG.toString(16) +
+             (darkerB < 16 ? '0' : '') + darkerB.toString(16);
+    }
+    
+    // Если не удалось распарсить, возвращаем исходный цвет
+    console.warn('Не удалось распарсить цвет:', color);
+    return color;
+  }
+
   function handleContentLoaded (response) {
     const cfg = response && response.data ? response.data : {};
     const delay = parseInt(cfg.delayMs, 10);
@@ -94,23 +139,186 @@
 
     cookieText.innerHTML = options.text
 
-    // Вставляем или img, или span в зависимости от textButton
-    let closeElement
-    if (options.textButton && options.textButton.trim() !== '') {
-      closeElement = document.createElement('span')
-      closeElement.classList.add('button')
-      closeElement.textContent = options.textButton
-    } else {
-      closeElement = document.createElement('img')
-      closeElement.src = '/bitrix/images/ushakov.cookie/close.svg'
-    }
-    closeElement.onclick = sendCookieRequestAndRemoveElement
 
-    // Собираем и вставляем в документ
-    innerDiv.appendChild(cookieText)
-    innerDiv.appendChild(closeElement)
-    cookieDiv.appendChild(innerDiv)
-    document.body.appendChild(cookieDiv)
+
+    // Вставляем либо кнопку "Согласен", либо крестик (иконка)
+    // + применяем цвет/позицию из настроек
+    let closeElement;
+    const hasTextButton = options.textButton && options.textButton.trim() !== '';
+
+    if (hasTextButton) {
+      // КНОПКА СОГЛАСИЯ
+      closeElement = document.createElement('span');
+      closeElement.classList.add('button');
+      closeElement.textContent = options.textButton.trim();
+      closeElement.onclick = sendCookieRequestAndRemoveElement;
+
+      // Цвета кнопки из настроек (если заданы)
+      if (options.acceptBtnBgColor)  closeElement.style.backgroundColor = options.acceptBtnBgColor;
+      if (options.acceptBtnTextColor) closeElement.style.color = options.acceptBtnTextColor;
+      
+      // Добавляем hover-эффект затемнения
+      closeElement.addEventListener('mouseenter', function() {
+        if (options.acceptBtnBgColor) {
+          // Затемняем фон кнопки на 20%
+          const darkerColor = darkenColor(options.acceptBtnBgColor, 0.2);
+          this.style.backgroundColor = darkerColor;
+        }
+      });
+      
+      closeElement.addEventListener('mouseleave', function() {
+        if (options.acceptBtnBgColor) {
+          // Возвращаем исходный цвет фона
+          this.style.backgroundColor = options.acceptBtnBgColor;
+        }
+      });
+
+      // Позиция кнопки относительно текста
+      // left  — кнопка слева от текста (перед)
+      // right — справа (по умолчанию, после)
+      // bottom — снизу отдельной строкой
+      const btnPos = (options.acceptBtnPosition || 'right');
+
+      // Сбрасываем возможные стили из CSS темы
+      innerDiv.style.display = '';
+      innerDiv.style.flexDirection = '';
+      innerDiv.style.alignItems = '';
+      cookieText.style.margin = '';
+      closeElement.style.margin = '0';
+
+      // Универсальные стили для "рядом"
+      function asRow() {
+        innerDiv.style.display = 'flex';
+        innerDiv.style.alignItems = 'center';
+        // gap защищает от "слипания" без ручных margin
+        innerDiv.style.gap = '10px';
+      }
+
+      if (btnPos === 'left') {
+        asRow();
+        // на всякий случай уберём левый margin, если он задан в .button
+        closeElement.style.marginLeft = '0';
+        closeElement.style.marginRight = '0';
+        // помещаем кнопку перед текстом
+        innerDiv.appendChild(closeElement);
+        innerDiv.appendChild(cookieText);
+      } else if (btnPos === 'bottom') {
+        // столбец: текст сверху, кнопка ниже
+        innerDiv.style.display = 'flex';
+        innerDiv.style.flexDirection = 'column';
+        
+        // Текст выравниваем по align плашки
+        const align = (options.align || 'center');
+        innerDiv.style.alignItems =
+          align === 'left'  ? 'flex-start' :
+          align === 'right' ? 'flex-end'  : 'center';
+
+        innerDiv.appendChild(cookieText);
+        
+        // Кнопка ВСЕГДА по центру, независимо от выравнивания плашки
+        closeElement.style.display = 'inline-block';
+        closeElement.style.marginTop = '10px';
+        closeElement.style.alignSelf = 'center'; // принудительно по центру
+        innerDiv.appendChild(closeElement);
+      } else { // 'right' по умолчанию
+        asRow();
+        innerDiv.appendChild(cookieText);
+        innerDiv.appendChild(closeElement);
+      }
+    } else {
+      // ---- КРЕСТИК ----
+      const rawPos  = (options.closeBtnPosition || 'right-top');
+      const crossPos = String(rawPos).trim();
+
+      // создаём элемент крестика (span × — чтобы красить цветом; иначе <img>)
+      let closeElement;
+      // Если цвет не задан, используем красный по умолчанию
+      const closeBtnColor = options.closeBtnColor || 'rgb(255, 7, 7)';
+      
+      // Всегда создаем span-крестик с цветом (по умолчанию красный)
+      closeElement = document.createElement('span');
+      closeElement.textContent = '×';
+      closeElement.setAttribute('aria-label', 'Закрыть');
+      closeElement.setAttribute('role', 'button');
+      closeElement.tabIndex = 0;
+      closeElement.style.fontSize = '22px';
+      closeElement.style.lineHeight = '1';
+      closeElement.style.cursor = 'pointer';
+      closeElement.style.userSelect = 'none';
+      closeElement.style.color = closeBtnColor;
+      closeElement.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          sendCookieRequestAndRemoveElement();
+        }
+      });
+      
+      // Добавляем hover-эффект затемнения для span-крестика
+      closeElement.addEventListener('mouseenter', function() {
+        const darkerColor = darkenColor(closeBtnColor, 0.2);
+        this.style.color = darkerColor;
+      });
+      
+      closeElement.addEventListener('mouseleave', function() {
+        this.style.color = closeBtnColor;
+      });
+      closeElement.onclick = sendCookieRequestAndRemoveElement;
+
+      if (crossPos === 'left-top' || crossPos === 'right-top') {
+        // ВЕРХНИЕ позиции: FLEX-ряд (крестик и текст в одной строке)
+        innerDiv.style.display = 'flex';
+        innerDiv.style.flexWrap = 'nowrap';
+        innerDiv.style.alignItems = 'flex-start'; // выравнивание по верху
+        innerDiv.style.gap = '10px';
+        innerDiv.style.flexDirection = 'row';
+
+        if (crossPos === 'left-top') {
+          innerDiv.appendChild(closeElement);
+          innerDiv.appendChild(cookieText);
+        } else { // right-top
+          innerDiv.appendChild(cookieText);
+          innerDiv.appendChild(closeElement);
+        }
+
+      } else {
+        // СЕРЕДИНА слева/справа: FLEX-ряд (крестик и текст в одной строке)
+        innerDiv.style.display = 'flex';
+        innerDiv.style.flexWrap = 'nowrap';   // НЕ переносим на новую строку
+        innerDiv.style.alignItems = 'center';
+        innerDiv.style.gap = '10px';
+        innerDiv.style.flexDirection = 'row'; // явно указываем направление
+
+        if (crossPos === 'left-middle') {
+          innerDiv.appendChild(closeElement);
+          innerDiv.appendChild(cookieText);
+        } else { // right-middle
+          innerDiv.appendChild(cookieText);
+          innerDiv.appendChild(closeElement);
+        }
+      }
+    }
+
+    // Финальная сборка
+    cookieDiv.appendChild(innerDiv);
+    document.body.appendChild(cookieDiv);
+
+    // // Вставляем или img, или span в зависимости от textButton
+    // let closeElement
+    // if (options.textButton && options.textButton.trim() !== '') {
+    //   closeElement = document.createElement('span')
+    //   closeElement.classList.add('button')
+    //   closeElement.textContent = options.textButton
+    // } else {
+    //   closeElement = document.createElement('img')
+    //   closeElement.src = '/bitrix/images/ushakov.cookie/close.svg'
+    // }
+    // closeElement.onclick = sendCookieRequestAndRemoveElement
+
+    // // Собираем и вставляем в документ
+    // innerDiv.appendChild(cookieText)
+    // innerDiv.appendChild(closeElement)
+    // cookieDiv.appendChild(innerDiv)
+    // document.body.appendChild(cookieDiv)
   }
 
   function sendCookieRequestAndRemoveElement () {

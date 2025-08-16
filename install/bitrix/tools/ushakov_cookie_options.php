@@ -26,6 +26,13 @@ $delayMs = \Bitrix\Main\Config\Option::get('ushakov.cookie', 'delay_ms', '0');
 $delayMs = (is_numeric($delayMs) && (int)$delayMs >= 0) ? (int)$delayMs : 0;
 $textButton = Option::get('ushakov.cookie', 'textButton_' . $siteId, '');
 
+$acceptBtnPosition = Option::get('ushakov.cookie', 'accept_btn_position_' . SITE_ID, 'right');
+$closeBtnPosition = Option::get('ushakov.cookie', 'close_btn_position_' . SITE_ID, 'right-top');
+$acceptBtnBgColor = Option::get('ushakov.cookie', 'accept_btn_bg_color_' . SITE_ID, '#4CAF50');
+$acceptBtnTextColor = Option::get('ushakov.cookie', 'accept_btn_text_color_' . SITE_ID, '#FFFFFF');
+$closeBtnColor = Option::get('ushakov.cookie', 'close_btn_color_' . SITE_ID, 'rgb(255, 7, 7)');
+
+
 // Замена текста в решётках на тег <a>
 $link = Option::get('ushakov.cookie', 'link_' . $siteId);
 if (trim($link) === '') {
@@ -76,6 +83,13 @@ $responseData = [
         'zIndex' => intval($zIndex) >= 0 ? intval($zIndex) : '9999',
         'delayMs' => $delayMs,
         'textButton' => $textButton ? : '',
+
+        'acceptBtnPosition' => in_array($acceptBtnPosition, ['left', 'right', 'bottom']) ? $acceptBtnPosition : 'right',
+        'closeBtnPosition' => in_array($closeBtnPosition, ['left-top','right-top','left-middle','right-middle'], true)
+              ? $closeBtnPosition : 'right-top',
+        'acceptBtnBgColor'  => $acceptBtnBgColor ?: '#4CAF50',
+        'acceptBtnTextColor'=> $acceptBtnTextColor ?: '#FFFFFF',
+        'closeBtnColor'     => $closeBtnColor ?: 'rgb(255, 7, 7)',
     ]
 ];
 
