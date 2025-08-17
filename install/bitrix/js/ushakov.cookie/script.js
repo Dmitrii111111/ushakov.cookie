@@ -322,22 +322,55 @@
   }
 
   function sendCookieRequestAndRemoveElement () {
+    // Сначала сохраняем cookie согласно настройкам модуля
     fetch('/bitrix/tools/ushakov_cookie_save.php', {
-      method: 'GET', // в оригинале BX.ajax делал GET-запрос, поэтому явно укажем
-      credentials: 'same-origin' // аналог BX.ajax: куки и сессия будут отправлены
+      method: 'GET',
+      credentials: 'same-origin'
     })
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
-      return response.text() // или .json(), если на сервере JSON
+      return response.text()
     })
     .then(data => {
       console.log('Cookie saved successfully')
-      // Если нужно что-то сделать с ответом сервера, делаем это здесь
+      
+      // Теперь отправляем согласие в реестр Bitrix через API
+      return fetch('/bitrix/tools/ushakov_cookie_consent.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        },
+        credentials: 'same-origin',
+        body: new URLSearchParams({
+          'sessid': BX.bitrix_sessid(),
+          'SITE_ID': BX.message('SITE_ID'),
+          'url': window.location.href
+        })
+      })
+    })
+    .then(response => response.json())
+    .then(consentData => {
+      if (consentData.success) {
+        console.log('Consent saved to Bitrix registry:', consentData.message)
+        if (consentData.existing) {
+          console.log('Existing consent found, no new record created')
+        }
+        // Выводим отладочную информацию
+        if (consentData.debug) {
+          console.log('Debug info:', consentData.debug)
+        }
+      } else {
+        console.warn('Failed to save consent:', consentData.error)
+        // Выводим отладочную информацию при ошибке
+        if (consentData.debug) {
+          console.log('Debug info:', consentData.debug)
+        }
+      }
     })
     .catch(error => {
-      console.error('Error saving cookie:', error)
+      console.error('Error saving consent:', error)
     })
     .finally(() => {
       const element = document.getElementById('ushakov-cookie-wrap')

@@ -33,10 +33,6 @@ $MESS['USHAKOV_COOKIE_OPT_OFFSET_Y_PLACEHOLDER'] = "напр. 7px";
 
 $MESS["USHAKOV_COOKIE_OPT_ZINDEX"] = "Положение по оси z-index";
 $MESS["USHAKOV_COOKIE_OPT_COMMON"] = "Общие настройки";
-$MESS['USHAKOV_COOKIE_OPT_CONSENT_MODE'] = "Хранение согласия";
-$MESS['USHAKOV_COOKIE_OPT_CONSENT_MODE_DAYS'] = "На N дней";
-$MESS['USHAKOV_COOKIE_OPT_CONSENT_MODE_SESSION'] = "Только на время сессии браузера";
-$MESS["USHAKOV_COOKIE_OPT_DAYS"] = "На сколько дней сохранять согласие пользователя";
 $MESS['USHAKOV_COOKIE_OPT_DELAY_MS'] = "Задержка показа, мс";
 // $MESS['USHAKOV_COOKIE_OPT_DELAY_MS_PLACEHOLDER'] = "напр. 1500";
 $MESS["USHAKOV_COOKIE_OPT_HELP_MESSAGE"] = "В тексте предупреждения, там, где вы хотите сделать ссылку, заключите <b>#текст ссылки#</b> в символ решетки.<br><b>Код цвета ссылки</b> – на самом деле значение css-свойства color, поэтому можно использовать rgb или название цвета.";
@@ -70,3 +66,10 @@ $MESS["USHAKOV_COOKIE_OPT_SAVE_TO_REGISTRY_Y"] = "Да";
 $MESS["USHAKOV_COOKIE_OPT_SAVE_TO_REGISTRY_N"] = "Нет";
 $MESS["USHAKOV_COOKIE_OPT_AGREEMENT_ID"] = "ID согласия в системе Bitrix";
 $MESS["USHAKOV_COOKIE_OPT_AGREEMENT_ID_PLACEHOLDER"] = "напр. 1";
+$MESS["USHAKOV_COOKIE_OPT_LOG_ONCE_PER_SESSION"] = "Логировать согласие только один раз за сессию";
+
+// Настройки хранения согласий
+$MESS['USHAKOV_COOKIE_OPT_CONSENT_MODE'] = "Хранение согласия";
+$MESS['USHAKOV_COOKIE_OPT_CONSENT_MODE_DAYS'] = "На N дней";
+$MESS['USHAKOV_COOKIE_OPT_CONSENT_MODE_SESSION'] = "Только на время сессии браузера";
+$MESS["USHAKOV_COOKIE_OPT_DAYS"] = "На сколько дней сохранять согласие пользователя";

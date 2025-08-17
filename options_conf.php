@@ -181,6 +181,35 @@ while ($item = $res->fetch()) {
         'html'  => '<input class="spectrum-bg-color" type="text" name="close_btn_color_' . $item['LID'] . '" value="' . $closeColor . '" style="width:140px;">',
     ];
 
+    // Интеграция с системой согласий Bitrix
+    $saveToRegistry = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'save_to_registry_' . $item['LID'], 'N'));
+    $options[] = [
+        'type'  => 'list',
+        'name'  => 'save_to_registry_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_SAVE_TO_REGISTRY'),
+        'list'  => [
+            'Y' => Loc::getMessage('USHAKOV_COOKIE_OPT_SAVE_TO_REGISTRY_Y'),
+            'N' => Loc::getMessage('USHAKOV_COOKIE_OPT_SAVE_TO_REGISTRY_N'),
+        ],
+        'value' => $saveToRegistry,
+    ];
+
+    $agreementId = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'agreement_id_' . $item['LID'], ''));
+    $options[] = [
+        'type'  => 'custom',
+        'name'  => 'agreement_id_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_AGREEMENT_ID'),
+        'html'  => '<input type="text" name="agreement_id_' . $item['LID'] . '" value="' . $agreementId . '" placeholder="' . Loc::getMessage('USHAKOV_COOKIE_OPT_AGREEMENT_ID_PLACEHOLDER') . '" style="width:140px;">',
+    ];
+
+    // Настройка логирования согласий
+    $options[] = [
+        'type' => 'checkbox',
+        'name' => 'log_once_per_session_' . $item['LID'],
+        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_LOG_ONCE_PER_SESSION'),
+        'value' => 'N',
+    ];
+
     // цвет плашки
     $options[] = [
         'type' => 'custom',
