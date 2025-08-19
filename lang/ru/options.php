@@ -66,6 +66,7 @@ $MESS["USHAKOV_COOKIE_OPT_SAVE_TO_REGISTRY_Y"] = "Да";
 $MESS["USHAKOV_COOKIE_OPT_SAVE_TO_REGISTRY_N"] = "Нет";
 $MESS["USHAKOV_COOKIE_OPT_AGREEMENT_ID"] = "ID согласия в системе Bitrix";
 $MESS["USHAKOV_COOKIE_OPT_AGREEMENT_ID_PLACEHOLDER"] = "напр. 1";
+$MESS["USHAKOV_COOKIE_OPT_VIEW_AGREEMENTS_LINK"] = "Просмотреть все согласия";
 $MESS["USHAKOV_COOKIE_OPT_LOG_ONCE_PER_SESSION"] = "Логировать согласие только один раз за сессию";
 
 // Настройки хранения согласий

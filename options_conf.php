@@ -199,7 +199,7 @@ while ($item = $res->fetch()) {
         'type'  => 'custom',
         'name'  => 'agreement_id_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_AGREEMENT_ID'),
-        'html'  => '<input type="text" name="agreement_id_' . $item['LID'] . '" value="' . $agreementId . '" placeholder="' . Loc::getMessage('USHAKOV_COOKIE_OPT_AGREEMENT_ID_PLACEHOLDER') . '" style="width:140px;">',
+        'html'  => '<input type="text" name="agreement_id_' . $item['LID'] . '" value="' . $agreementId . '" placeholder="' . Loc::getMessage('USHAKOV_COOKIE_OPT_AGREEMENT_ID_PLACEHOLDER') . '" style="width:140px;"> <a href="/bitrix/admin/agreement_admin.php" target="_blank" style="margin-left: 10px; color: #0066cc; text-decoration: underline;">' . Loc::getMessage('USHAKOV_COOKIE_OPT_VIEW_AGREEMENTS_LINK') . '</a>',
     ];
 
     // Настройка логирования согласий
