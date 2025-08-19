@@ -41,7 +41,7 @@ if (trim($link) === '') {
 // $textTemplate = Option::get('ushakov.cookie', 'text_' . $siteId);
 $textTemplate = Option::get('ushakov.cookie', 'text_' . $siteId, '');
 if (trim($textTemplate) === '') {
-    $textTemplate = 'Мы используем файлы cookie для работы сайта и сбора статистики. Продолжая пользоваться сайтом, вы соглашаетесь с нашей <a href="/cookies-agreement.php" target="_blank">Политикой использования cookie</a>.';
+    $textTemplate = "<div style='text-align: center;'>Мы используем файлы cookie для работы сайта и сбора статистики. Продолжая пользоваться сайтом, вы соглашаетесь с нашей <a href='/cookies-agreement.php' target='_blank'>Политикой использования cookie</a>.</div>";
 }
 
 $allowed = '<a><p><b><strong><i><em><u><br><div><span><font>'

@@ -57,6 +57,16 @@ if($request->isPost() && $Update.$Apply.$RestoreDefaults <> '' && $modulePerms =
     }
 }
 
+// Определяем названия групп
+$groupNames = [
+    'SITE_SETTINGS' => 'Настройки сайта',
+    'CONTENT' => 'Содержимое и кнопки',
+    'APPEARANCE' => 'Внешний вид',
+    'POSITION' => 'Положение плашки',
+    'BEHAVIOR' => 'Поведение и время',
+    'INTEGRATION' => 'Интеграция с Bitrix'
+];
+
 /*
  * Вывод интерфейса опций
  */
@@ -69,48 +79,68 @@ $tabControl->Begin();
             continue;
         }
         $tabControl->BeginNextTab();
+        
+        // Группируем опции по группам
+        $groupedOptions = [];
         foreach ($arTab['options'] as $arOption) {
-            if ($arOption['type'] === 'heading') {
-                ?><tr class="heading"><td colspan="2"><?=$arOption['heading']?></td></tr><?php
-            } elseif ($arOption['type'] === 'message') {
-                ?><tr><td colspan="2" align="center"><div class="adm-info-message-wrap" align="center"><div class="adm-info-message"><?=$arOption['message']?></div></div></td></tr><?php
-            } else {
-                $val = \Bitrix\Main\Config\Option::get($mid, $arOption['name']) ?: $arOption['value'];
-                ?>
-                <tr>
-                    <td width="50%" class="adm-detail-content-cell-l" nowrap<?= $arOption['type'] === 'textarea' ? ' class="adm-detail-valign-top"' : '' ?>>
-                        <label for="<?= $arOption['name']; ?>"><?= $arOption['title']; ?>:</label>
-                    <td width="50%" class="adm-detail-content-cell-r">
-                        <?php
-                        switch ($arOption['type'])
-                        {
-                            case 'checkbox':
-                                ?><input type="hidden" name="<?= $arOption['name']; ?>" value="N">
-                                <input type="checkbox" id="<?= $arOption['name']; ?>" name="<?= $arOption['name']; ?>" value="Y"<?= ($val === 'Y' ? ' checked' : ''); ?>><?php
-                                break;
-                            case 'text':
-                                ?><input type="text" id="<?= $arOption['name']; ?>" name="<?= $arOption['name']; ?>" value="<?= htmlspecialcharsbx($val); ?>" size="<?=$arOption['size']?:44?>" maxlength="255" placeholder="<?= $arOption['placeholder'] ?? ''?>"><?php
-                                break;
-                            case 'textarea':
-                                ?><textarea id="<?= $arOption['name']; ?>" name="<?= $arOption['name']; ?>" cols="<?=$arOption['cols']?:43?>" rows="<?=$arOption['rows']?:4?>"><?= htmlspecialcharsbx($val); ?></textarea><?php
-                                break;
-                            case 'list':
-                                ?>
-                                <select id="<?=$arOption['name']?>" name="<?=$arOption['name']?>">
-                                    <?php foreach ($arOption['list'] as $listValue => $listTitle):?>
-                                    <option value="<?=$listValue?>"<?=$listValue==$val?' selected':''?>><?=$listTitle?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <?php
-                                break;
-                            case 'custom':
-                                echo $arOption['html'] ?? '';
-                                break;
-                        }
-                        ?>
-                    </td>
-                </tr>
-                <?php
+            $group = $arOption['group'] ?? 'OTHER';
+            if (!isset($groupedOptions[$group])) {
+                $groupedOptions[$group] = [];
+            }
+            $groupedOptions[$group][] = $arOption;
+        }
+        
+        // Выводим опции по группам
+        foreach ($groupedOptions as $groupKey => $groupOptions) {
+            // Выводим заголовок группы
+            if (isset($groupNames[$groupKey])) {
+                ?><tr class="heading group-header" data-group="<?=$groupKey?>"><td colspan="2"><?=$groupNames[$groupKey]?></td></tr><?php
+            }
+            
+            // Выводим опции группы
+            foreach ($groupOptions as $arOption) {
+                if ($arOption['type'] === 'heading') {
+                    ?><tr class="heading"><td colspan="2"><?=$arOption['heading']?></td></tr><?php
+                } elseif ($arOption['type'] === 'message') {
+                    ?><tr><td colspan="2" align="center"><div class="adm-info-message-wrap" align="center"><div class="adm-info-message"><?=$arOption['message']?></div></div></td></tr><?php
+                } else {
+                    $val = \Bitrix\Main\Config\Option::get($mid, $arOption['name']) ?: $arOption['value'];
+                    ?>
+                    <tr>
+                        <td width="50%" class="adm-detail-content-cell-l" nowrap<?= $arOption['type'] === 'textarea' ? ' class="adm-detail-valign-top"' : '' ?>>
+                            <label for="<?= $arOption['name']; ?>"><?= $arOption['title']; ?>:</label>
+                        <td width="50%" class="adm-detail-content-cell-r">
+                            <?php
+                            switch ($arOption['type'])
+                            {
+                                case 'checkbox':
+                                    ?><input type="hidden" name="<?= $arOption['name']; ?>" value="N">
+                                    <input type="checkbox" id="<?= $arOption['name']; ?>" name="<?= $arOption['name']; ?>" value="Y"<?= ($val === 'Y' ? ' checked' : ''); ?>><?php
+                                    break;
+                                case 'text':
+                                    ?><input type="text" id="<?= $arOption['name']; ?>" name="<?= $arOption['name']; ?>" value="<?= htmlspecialcharsbx($val); ?>" size="<?=$arOption['size']?:44?>" maxlength="255" placeholder="<?= $arOption['placeholder'] ?? ''?>"><?php
+                                    break;
+                                case 'textarea':
+                                    ?><textarea id="<?= $arOption['name']; ?>" name="<?= $arOption['name']; ?>" cols="<?=$arOption['cols']?:43?>" rows="<?=$arOption['rows']?:4?>"><?= htmlspecialcharsbx($val); ?></textarea><?php
+                                    break;
+                                case 'list':
+                                    ?>
+                                    <select id="<?=$arOption['name']?>" name="<?=$arOption['name']?>">
+                                        <?php foreach ($arOption['list'] as $listValue => $listTitle):?>
+                                        <option value="<?=$listValue?>"<?=$listValue==$val?' selected':''?>><?=$listTitle?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <?php
+                                    break;
+                                case 'custom':
+                                    echo $arOption['html'] ?? '';
+                                    break;
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                    <?php
+                }
             }
         }
         $tabControl->EndTab();
@@ -119,7 +149,7 @@ $tabControl->Begin();
     <?php $tabControl->Buttons();?>
     <input type="submit" name="Update" <?= $modulePerms < 'W' ? 'disabled' : '' ?> value="<?=GetMessage('MAIN_SAVE')?>" title="<?=GetMessage('MAIN_OPT_SAVE_TITLE')?>" class="adm-btn-save">
     <input type="submit" name="Apply" value="<?=GetMessage('MAIN_OPT_APPLY')?>" title="<?=GetMessage('MAIN_OPT_APPLY_TITLE')?>">
-    <input type="submit" name="RestoreDefaults" <?= $modulePerms < 'W' ? 'disabled' : '' ?> title="<?=GetMessage('MAIN_HINT_RESTORE_DEFAULTS')?>" OnClick="return confirm('<?=AddSlashes(GetMessage('MAIN_HINT_RESTORE_DEFAULTS_WARNING'))?>')" value="<?=GetMessage('MAIN_RESTORE_DEFAULTS')?>">
+    <input type="submit" name="RestoreDefaults" <?= $modulePerms < 'W' ? 'disabled' : '' ?> title="<?=AddSlashes(GetMessage('MAIN_HINT_RESTORE_DEFAULTS'))?>" OnClick="return confirm('<?=AddSlashes(GetMessage('MAIN_HINT_RESTORE_DEFAULTS_WARNING'))?>')" value="<?=GetMessage('MAIN_RESTORE_DEFAULTS')?>">
     <?=bitrix_sessid_post();?>
     <?php $tabControl->End();?>
 
@@ -193,5 +223,49 @@ $tabControl->Begin();
     }
     .adm-detail-content-cell-l {
         user-select: none
+    }
+    
+    /* Стили для групп настроек */
+    .adm-detail-content-table > tbody > tr.group-header td {
+        background-color: #f0f8ff !important;
+        border-bottom: 2px solid #4a90e2;
+        font-weight: bold;
+        color: #2c5aa0;
+        padding: 10px 70px 8px !important;
+    }
+    
+    .adm-detail-content-table > tbody > tr.group-header td:before {
+        content: "📋 ";
+        margin-right: 8px;
+    }
+    
+    /* Отступы между группами */
+    .adm-detail-content-table > tbody > tr:not(.group-header) + tr.group-header {
+        margin-top: 20px;
+    }
+    
+    /* Стили для разных групп */
+    .adm-detail-content-table > tbody > tr.group-header[data-group="SITE_SETTINGS"] td:before {
+        content: "🌐 ";
+    }
+    
+    .adm-detail-content-table > tbody > tr.group-header[data-group="CONTENT"] td:before {
+        content: "📝 ";
+    }
+    
+    .adm-detail-content-table > tbody > tr.group-header[data-group="APPEARANCE"] td:before {
+        content: "🎨 ";
+    }
+    
+    .adm-detail-content-table > tbody > tr.group-header[data-group="POSITION"] td:before {
+        content: "📍 ";
+    }
+    
+    .adm-detail-content-table > tbody > tr.group-header[data-group="BEHAVIOR"] td:before {
+        content: "⚙️ ";
+    }
+    
+    .adm-detail-content-table > tbody > tr.group-header[data-group="INTEGRATION"] td:before {
+        content: "🔗 ";
     }
 </style>

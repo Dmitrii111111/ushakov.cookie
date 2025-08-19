@@ -13,6 +13,7 @@ while ($item = $res->fetch()) {
     $options[] = [
         'type' => 'heading',
         'heading' => $item['NAME'] . ' <sup>' . $item['LID'] . '</sup>',
+        'group' => 'SITE_SETTINGS'
     ];
 
     $options[] = [
@@ -20,6 +21,7 @@ while ($item = $res->fetch()) {
         'name' => 'active_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_ACTIVE'),
         'value' => $item['DEF'] === 'Y' ? 'Y' : 'N',
+        'group' => 'SITE_SETTINGS'
     ];
 
     $options[] = [
@@ -27,6 +29,7 @@ while ($item = $res->fetch()) {
         'name' => 'disableMob_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_ACTIVE_MOB'),
         'value' => 'N',
+        'group' => 'SITE_SETTINGS'
     ];
 
     $options[] = [
@@ -62,7 +65,7 @@ while ($item = $res->fetch()) {
                     // SearchButton — поиск/замена по содержимому редактора.
                     // ChangeView — переключение режимов: визуальный / HTML-код / сплит.
                     // Undo / Redo — отмена/повтор последнего действия (Ctrl+Z / Ctrl+Y).
-                    // StyleSelector — выпадающий список “Абзац / Заголовок H1–H6 / и т.п.” Меняет блочную обёртку (<p>, <h1>…).
+                    // StyleSelector — выпадающий список "Абзац / Заголовок H1–H6 / и т.п." Меняет блочную обёртку (<p>, <h1>…).
                     // FontSelector — выбор шрифта, добавляет inline-стиль font-family (обычно <span style="font-family:...">).
                     // FontSize — размер шрифта, даёт inline-стиль font-size.
                     // Bold / Italic / Underline / Strikeout — жирный, курсив, подчёркивание, зачёркивание (<b>/<strong>, <i>/<em>, <u>, <s>/<strike>).
@@ -77,20 +80,20 @@ while ($item = $res->fetch()) {
                     // InsertVideo — вставить видео (YouTube/Vimeo и т.п., вставляет <iframe>/встраивание).
                     // InsertAnchor — якорь на странице (<a name="..."> или id).
                     // InsertTable — вставка/редактирование таблиц (<table>, thead/tbody, кол-во строк/столбцов).
-                    // InsertChar — “спецсимвол” (набор символов типа ™, ©, ↑ и др.).
+                    // InsertChar — "спецсимвол" (набор символов типа ™, ©, ↑ и др.).
                     // Settings — настройки редактора (панели, поведение и т.д.).
                     // Fullscreen — на весь экран.
-                    // PrintBreak — “разрыв для печати” (служебная метка для печатных шаблонов Bitrix).
-                    // PageBreak — “разделитель страниц” (служебный тег <BREAK />, используется некоторыми компонентами/шаблонами для пагинации контента).
+                    // PrintBreak — "разрыв для печати" (служебная метка для печатных шаблонов Bitrix).
+                    // PageBreak — "разделитель страниц" (служебный тег <BREAK />, используется некоторыми компонентами/шаблонами для пагинации контента).
                     // InsertHr — горизонтальная линия (<hr>).
                     // Spellcheck — орфография (если доступна конфигурация словаря).
                     // Code — оформление как код (обычно <pre><code> или аналогичный блочный стиль).
                     // Quote — цитата (<blockquote> или стилизованный блок).
                     // Smile — смайлики (вставляет изображения/эмодзи, если разрешено).
                     // Sub / Sup — нижний/верхний индекс (<sub>, <sup>).
-                    // More — “Ещё…”: выпадающий контейнер для лишних кнопок, если панель узкая.
+                    // More — "Ещё…": выпадающий контейнер для лишних кнопок, если панель узкая.
                     // BbCode — переключатель BB-кода (меняет модель разметки; обычно не используем, если хотим чистый HTML).
-                    // SeoUniqText — служебная кнопка модуля SEO Bitrix “Отправить уникальный текст в Яндекс”.
+                    // SeoUniqText — служебная кнопка модуля SEO Bitrix "Отправить уникальный текст в Яндекс".
 
                         // минимальный набор
                         'controlsMap' => [
@@ -122,6 +125,7 @@ while ($item = $res->fetch()) {
                 htmlspecialcharsbx($content) .
                 '</textarea>';
         })(),
+        'group' => 'CONTENT'
     ];
 
     $options[] = [
@@ -130,6 +134,7 @@ while ($item = $res->fetch()) {
         'title' => Loc::getMessage('USHAKOV_COOKIE_TEXT_BUTTON_LABEL'),
         'value' => '',
         'placeholder' => Loc::getMessage('USHAKOV_COOKIE_TEXT_BUTTON_PLACEHOLDER'),
+        'group' => 'CONTENT'
     ];
 
     $options[] = [
@@ -142,6 +147,7 @@ while ($item = $res->fetch()) {
             'bottom' => Loc::getMessage('USHAKOV_COOKIE_OPT_ACCEPT_BTN_POSITION_BOTTOM'),
         ],
         'value' => 'right',
+        'group' => 'CONTENT'
     ];
 
     $options[] = [
@@ -155,6 +161,7 @@ while ($item = $res->fetch()) {
             'right-middle'    => Loc::getMessage('USHAKOV_COOKIE_OPT_CLOSE_BTN_POSITION_RIGHT_MIDDLE'),
         ],
         'value' => 'right-top',
+        'group' => 'CONTENT'
     ];
 
     $acceptBg = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'accept_btn_bg_color_' . $item['LID'], '#4CAF50'));
@@ -163,6 +170,7 @@ while ($item = $res->fetch()) {
         'name'  => 'accept_btn_bg_color_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_ACCEPT_BTN_BG_COLOR'),
         'html'  => '<input class="spectrum-bg-color" type="text" name="accept_btn_bg_color_' . $item['LID'] . '" value="' . $acceptBg . '" style="width:140px;">',
+        'group' => 'APPEARANCE'
     ];
 
     $acceptText = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'accept_btn_text_color_' . $item['LID'], '#FFFFFF'));
@@ -171,6 +179,7 @@ while ($item = $res->fetch()) {
         'name'  => 'accept_btn_text_color_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_ACCEPT_BTN_TEXT_COLOR'),
         'html'  => '<input class="spectrum-bg-color" type="text" name="accept_btn_text_color_' . $item['LID'] . '" value="' . $acceptText . '" style="width:140px;">',
+        'group' => 'APPEARANCE'
     ];
 
     $closeColor = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'close_btn_color_' . $item['LID'], 'rgb(255, 7, 7)'));
@@ -179,6 +188,7 @@ while ($item = $res->fetch()) {
         'name'  => 'close_btn_color_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_CLOSE_BTN_COLOR'),
         'html'  => '<input class="spectrum-bg-color" type="text" name="close_btn_color_' . $item['LID'] . '" value="' . $closeColor . '" style="width:140px;">',
+        'group' => 'APPEARANCE'
     ];
 
     // Интеграция с системой согласий Bitrix
@@ -192,6 +202,7 @@ while ($item = $res->fetch()) {
             'N' => Loc::getMessage('USHAKOV_COOKIE_OPT_SAVE_TO_REGISTRY_N'),
         ],
         'value' => $saveToRegistry,
+        'group' => 'INTEGRATION'
     ];
 
     $agreementId = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'agreement_id_' . $item['LID'], ''));
@@ -200,55 +211,58 @@ while ($item = $res->fetch()) {
         'name'  => 'agreement_id_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_AGREEMENT_ID'),
         'html'  => '<input type="text" name="agreement_id_' . $item['LID'] . '" value="' . $agreementId . '" placeholder="' . Loc::getMessage('USHAKOV_COOKIE_OPT_AGREEMENT_ID_PLACEHOLDER') . '" style="width:140px;"> <a href="/bitrix/admin/agreement_admin.php" target="_blank" style="margin-left: 10px; color: #0066cc; text-decoration: underline;">' . Loc::getMessage('USHAKOV_COOKIE_OPT_VIEW_AGREEMENTS_LINK') . '</a>',
+        'group' => 'INTEGRATION'
     ];
 
-    // Настройка логирования согласий
+    // Настройки внешнего вида
+    $bgColor = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'bg_color_' . $item['LID'], 'rgba(0, 0, 0, 0.85)'));
     $options[] = [
-        'type' => 'checkbox',
-        'name' => 'log_once_per_session_' . $item['LID'],
-        'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_LOG_ONCE_PER_SESSION'),
-        'value' => 'N',
-    ];
-
-    // цвет плашки
-    $options[] = [
-        'type' => 'custom',
-        'name' => 'bg_color_' . $item['LID'],
+        'type'  => 'custom',
+        'name'  => 'bg_color_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_BG_COLOR'),
-        'html' => '<input class="spectrum-bg-color" type="text" name="bg_color_' . $item["LID"] . '" value="' . htmlspecialcharsbx(\Bitrix\Main\Config\Option::get("ushakov.cookie", "bg_color_" . $item["LID"], "rgba(0, 0, 0, 0.85)")) . '" style="width: 140px;">'
+        'html'  => '<input class="spectrum-bg-color" type="text" name="bg_color_' . $item['LID'] . '" value="' . $bgColor . '" style="width:140px;">',
+        'group' => 'APPEARANCE'
     ];
 
-    // радиус скругления
+    $borderRadius = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'border_radius_' . $item['LID'], '6px'));
     $options[] = [
-        'type'  => 'text',
-        'name'  => 'border_radius_' . $item['LID'],
+        'type' => 'text',
+        'name' => 'border_radius_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_BORDER_RADIUS'),
-        'value' => '6px',
-        'size'  => 6,
-        'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_BORDER_RADIUS_PLACEHOLDER'),
+        'value' => $borderRadius,
+        'size' => 8,
+        'placeholder' => '6px',
+        'group' => 'APPEARANCE'
     ];
 
-    // тень (вкл/выкл)
+    $shadow = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'shadow_' . $item['LID'], 'Y'));
     $options[] = [
-        'type'  => 'checkbox',
+        'type'  => 'list',
         'name'  => 'shadow_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_SHADOW'),
-        'value' => 'Y', // по умолчанию включена
+        'list'  => [
+            'Y' => Loc::getMessage('USHAKOV_COOKIE_OPT_SHADOW_Y'),
+            'N' => Loc::getMessage('USHAKOV_COOKIE_OPT_SHADOW_N'),
+        ],
+        'value' => $shadow,
+        'group' => 'APPEARANCE'
     ];
 
-    // Позиция плашки
+    // Настройки положения
+    $position = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'position_' . $item['LID'], 'bottom'));
     $options[] = [
         'type'  => 'list',
         'name'  => 'position_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_POSITION'),
         'list'  => [
-            'bottom' => Loc::getMessage('USHAKOV_COOKIE_OPT_POSITION_BOTTOM'),
             'top'    => Loc::getMessage('USHAKOV_COOKIE_OPT_POSITION_TOP'),
+            'bottom' => Loc::getMessage('USHAKOV_COOKIE_OPT_POSITION_BOTTOM'),
         ],
-        'value' => 'bottom',
+        'value' => $position,
+        'group' => 'POSITION'
     ];
 
-    // Выравнивание (слева/центр/справа)
+    $align = htmlspecialcharsbx(\Bitrix\Main\Config\Option::get('ushakov.cookie', 'align_' . $item['LID'], 'center'));
     $options[] = [
         'type'  => 'list',
         'name'  => 'align_' . $item['LID'],
@@ -259,6 +273,7 @@ while ($item = $res->fetch()) {
             'right'  => Loc::getMessage('USHAKOV_COOKIE_OPT_ALIGN_RIGHT'),
         ],
         'value' => 'center',
+        'group' => 'POSITION'
     ];
 
     // Макс. ширина (на десктопе)
@@ -269,6 +284,7 @@ while ($item = $res->fetch()) {
         'value' => '640px',
         'size' => 8,
         'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_MAX_WIDTH_PLACEHOLDER'),
+        'group' => 'POSITION'
     ];
 
     // Горизонтальный отступ
@@ -279,6 +295,7 @@ while ($item = $res->fetch()) {
         'value' => '0px',
         'size' => 6,
         'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_OFFSET_X_PLACEHOLDER'),
+        'group' => 'POSITION'
     ];
 
     // Вертикальный отступ
@@ -289,6 +306,7 @@ while ($item = $res->fetch()) {
         'value' => '7px',
         'size' => 6,
         'placeholder' => Loc::getMessage('USHAKOV_COOKIE_OPT_OFFSET_Y_PLACEHOLDER'),
+        'group' => 'POSITION'
     ];
 
     $options[] = [
@@ -296,13 +314,15 @@ while ($item = $res->fetch()) {
         'name' => 'z_index_' . $item['LID'],
         'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_ZINDEX'),
         'value' => '9999',
-        'size' => 5
+        'size' => 5,
+        'group' => 'POSITION'
     ];
 }
 
 $options[] = [
     'type' => 'heading',
     'heading' => Loc::getMessage('USHAKOV_COOKIE_OPT_COMMON'),
+    'group' => 'BEHAVIOR'
 ];
 
 // селект "Хранение согласия"
@@ -315,6 +335,7 @@ $options[] = [
         'session' => Loc::getMessage('USHAKOV_COOKIE_OPT_CONSENT_MODE_SESSION'),
     ],
     'value' => 'days', // дефолт: хранить N дней
+    'group' => 'BEHAVIOR'
 ];
 
 $options[] = [
@@ -322,7 +343,8 @@ $options[] = [
     'name' => 'days',
     'title' => Loc::getMessage('USHAKOV_COOKIE_OPT_DAYS'),
     'value' => '365',
-    'size' => '10'
+    'size' => '10',
+    'group' => 'BEHAVIOR'
 ];
 
 $options[] = [
@@ -334,11 +356,13 @@ $options[] = [
         '" min="0" step="100" style="width: 120px;">' .
         '<span style="margin-left:8px;color:#80868b;">мс (1000 мс = 1 сек.)</span>' .
         '<span id="delay_ms_hint" style="margin-left:12px;color:#80868b;"></span>',
+    'group' => 'BEHAVIOR'
 ];
 
 $options[] = [
     'type' => 'message',
     'message' => Loc::getMessage('USHAKOV_COOKIE_OPT_HELP_MESSAGE'),
+    'group' => 'BEHAVIOR'
 ];
 
 return [
