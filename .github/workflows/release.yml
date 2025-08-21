@@ -24,9 +24,10 @@ jobs:
           set -e
           mkdir -p dist/ushakov.cookie
           
-          # Копируем основные файлы модуля
-          cp -r options.php options_conf.php include.php dist/ushakov.cookie/
-          cp -r lang install dist/ushakov.cookie/
+          # Копируем ТОЛЬКО файлы модуля (без документации)
+          cp options.php options_conf.php include.php dist/ushakov.cookie/
+          cp -r lang dist/ushakov.cookie/
+          cp -r install dist/ushakov.cookie/
           
           cd dist
           zip -r "ushakov.cookie-${{ steps.vars.outputs.VER }}.zip" ushakov.cookie
