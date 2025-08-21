@@ -1,0 +1,52 @@
+# IDE и редакторы
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Временные файлы
+*.tmp
+*.temp
+*.log
+
+# Зависимости
+vendor/
+node_modules/
+
+# Сборка
+dist/
+build/
+
+# Окружение
+.env
+.env.local
+.env.production
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Bitrix специфичные
+/bitrix/cache/
+/bitrix/managed_cache/
+/bitrix/tmp/
+/bitrix/updates/
+/bitrix/backup/
+
+# Логи
+*.log
+logs/
+
+# База данных
+*.sql
+*.sqlite
+
+# Архивы
+*.zip
+*.tar.gz
+*.rar
+
+# Документация (если генерируется)
+docs/_build/
+docs/api/
