@@ -12,7 +12,7 @@
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 ![php](https://img.shields.io/badge/PHP-7.4%2B%20|%208.0%2B-blue)
 ![bitrix](https://img.shields.io/badge/1C--Bitrix-main%20module%20required-lightgrey)
-[![issues](https://img.shields.io/github/issues/Dmitrii111111/ushakov.cookie)](../../issues)
+[![issues](https://img.shields.io/github/issues/UshakovDev/ushakov.cookie)](../../issues)
 
 Гибкая и легкая плашка согласия на использование cookie для **1С-Битрикс**:
 
@@ -71,7 +71,7 @@
 ### Вариант B — из GitHub (git)
 ```bash
 cd /path/to/bitrix/local/modules
-git clone https://github.com/Dmitrii111111/ushakov.cookie.git ushakov.cookie
+git clone https://github.com/UshakovDev/ushakov.cookie.git ushakov.cookie
 ```
 
 Затем активируйте модуль в админке; страница `/cookies-agreement.php` будет создана автоматически (см. выше).
